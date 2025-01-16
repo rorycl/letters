@@ -562,6 +562,52 @@ type Email struct {
 	AttachedFiles []AttachedFile
 }
 
+// fileData is a shared type between InlineFile and AttachedFile types.
+// fileData is represented by a writerFunc (by default, the func
+// returned by f.setDefaultWriterFunc) which may put data in the data
+// field, but otherwise can be used to, for example, directly save files
+// to disk. A writerFunc can also be used to discard attachment data,
+// for example:
+//
+//	f.writerFunc = func(r io.Reader) error {
+//		_, err := io.Copy(io.Discard, r)
+//		return err
+//	}
+//
+// Passing a closure to writerFunc can allow each file to be written to
+// a directory on disk or perhaps written to a database, for example:
+//
+//	myClosure := func(directory string) (func(r io.Reader) error, error) {
+//		fileNum := 0
+//		fileNameTpl := "file_from_email%d"
+//		directory := directory
+//		err := os.Mkdir(directory, 0755)
+//		if err != nil {
+//			return nil, err
+//		}
+//		return func(r io.Reader) error {
+//			fileNum++
+//			path := os.Path.Join(directory, fileNameTpl % fileNum)
+//			f, err := os.Create(path)
+//			if err != nil {
+//				return err
+//			}
+//			_, err = io.Copy(f, r)
+//			return err
+//		}
+//	}
+//
+//	// initalise
+//	globalClosure := myClosure("/tmp/output")
+//
+//	// attach
+//	f.setWriterFunc(globalClosure)
+//
+// In the example above a global is used since there is no options or
+// parser settings struct presently in use. In future this "what to do
+// with attachment io.Readers" could be attached to an
+// options/parser structa and/or used to initialise new inline or attached
+// file types, which is why these are presently private funcs.
 type fileData struct {
 	data       []byte
 	writerFunc func(io.Reader) error
@@ -576,6 +622,9 @@ func (f *fileData) setWriterFunc(s func(io.Reader) error) {
 }
 
 func (f *fileData) setDefaultWriterFunc() {
+	if f.writerFunc != nil {
+		return
+	}
 	defaultFunc := func(r io.Reader) error {
 		var err error
 		f.data, err = io.ReadAll(r)
