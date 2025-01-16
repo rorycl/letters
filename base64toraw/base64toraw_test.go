@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"io"
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -94,18 +94,25 @@ func TestDecodingToRaw(t *testing.T) {
 func TestFromFileWithEmptyLines(t *testing.T) {
 
 	// files with empty lines
-	for _, jf := range []string{"testdata/j1.b64", "testdata/j2.b64", "testdata/j3.b64", "testdata/j4.b64", "testdata/e1.b64"} {
+	for _, jf := range []string{
+		"testdata/j1.b64",
+		"testdata/j2.b64",
+		"testdata/j3.b64",
+		"testdata/j4.b64",
+		"testdata/e1.b64",
+		"testdata/jpg.b64",
+	} {
 
-		input, err := ioutil.ReadFile(jf)
+		input, err := os.Open(jf)
 		if err != nil {
-			t.Fatal("file", jf, err)
+			t.Fatal(err)
 		}
 
 		contentReader := base64.NewDecoder(
 			base64.RawStdEncoding,
-			base64toraw.NewBase64ToRaw(input),
+			NewBase64ToRaw(input),
 		)
-		bb, err := io.ReadAll(contentReader)
+		_, err = io.ReadAll(contentReader)
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -24,7 +24,7 @@ func NewBase64ToRaw(r io.Reader) *Base64ToRaw {
 	}
 }
 
-// Read is takend from encoding/base64/base64.go
+// Read is largely taken from encoding/base64/base64.go
 func (b *Base64ToRaw) Read(p []byte) (int, error) {
 	n, err := b.wrapped.Read(p)
 	for n > 0 {
