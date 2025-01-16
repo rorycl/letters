@@ -1,6 +1,7 @@
 package letters
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/mail"
@@ -561,15 +562,44 @@ type Email struct {
 	AttachedFiles []AttachedFile
 }
 
+type fileData struct {
+	data       []byte
+	writerFunc func(io.Reader) error
+}
+
+func (f *fileData) Data() []byte {
+	return f.data
+}
+
+func (f *fileData) setWriterFunc(s func(io.Reader) error) {
+	f.writerFunc = s
+}
+
+func (f *fileData) setDefaultWriterFunc() {
+	defaultFunc := func(r io.Reader) error {
+		var err error
+		f.data, err = io.ReadAll(r)
+		return err
+	}
+	f.setWriterFunc(defaultFunc)
+}
+
+func (f *fileData) Write(r io.Reader) error {
+	if f.writerFunc == nil {
+		return errors.New("file data writer func not initialised")
+	}
+	return f.writerFunc(r)
+}
+
 type InlineFile struct {
 	ContentID          string
 	ContentType        ContentTypeHeader
 	ContentDisposition ContentDispositionHeader
-	DataReader         io.Reader
+	fileData
 }
 
 type AttachedFile struct {
 	ContentType        ContentTypeHeader
 	ContentDisposition ContentDispositionHeader
-	DataReader         io.Reader
+	fileData
 }
