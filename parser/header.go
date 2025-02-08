@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mnako/letters/decoders"
+	"github.com/rorycl/letters/decoders"
 )
 
 var (

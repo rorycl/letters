@@ -13,8 +13,8 @@ import (
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/transform"
 
-	"github.com/mnako/letters/email"
 	"github.com/rorycl/base64toraw"
+	"github.com/rorycl/letters/email"
 )
 
 func DecodeHeader(s string) (string, error) {

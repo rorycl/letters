@@ -30,8 +30,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/mnako/letters"
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters"
+	"github.com/rorycl/letters/email"
 	"github.com/sanity-io/litter"
 )
 

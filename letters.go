@@ -1,131 +1,131 @@
-// # Letters, or how to parse emails in Go
+// # Letters, an email parsing package for go
 //
-// Letters is a minimalistic Golang library for parsing plaintext and
-// MIME emails.
+// This is a fork of [mnako/letters](https://github.com/mnako/letters), a
+// minimalistic Golang library for parsing plaintext and MIME emails.
 //
-// It correctly handles text and MIME mime-types, Base64 and Quoted-Printable
-// Content-Transfer-Encoding, as well as any text encoding that Golang
-// standard library is capable of handling. Letters will parse an email into
-// a simple struct with standard headers and text, enriched text, and HTML
-// content, and decode inline and attached files.
+// Thanks to @mnako and contributors, letters has great support for
+// languages other than English, text encodings and transfer-encodings.
 //
-// Letters also supports options for skipping processing parts of
-// messages and providing custom processing functions.
+// This fork focuses on performance, memory efficiency and extensibility
+// through modularisation.
 //
-// # Quickstart
+// ## Quickstart
 //
-// Install
+// # Install
 //
-//	go get github.com/mnako/letters@v0.2.3
+// ```
+// go get github.com/rorycl/letters@latest
+// ```
 //
-// Parse a raw email from a Reader:
+// Parse an email:
 //
-//	email, err := letters.ParseEmail(r)
+//	```go
+//	p := letters.NewParser()
+//	parsedEmail, err := p.Parse(reader)
 //
-//	if err != nil {
-//	    log.Fatal(err)
-//	}
-//
-// and you can access the common headers:
-//
-//	email.Headers.Sender
-//	// mail.Address{Name: "Alice Sender", Address: "alice.sender@example.com"}
-//
-//	email.Headers.From
-//	// []mail.Address{
-//	//  {Name: "Alice Sender", Address: "alice.sender@example.com"},
-//	//  {Name: "Alice Sender", Address: "alice.sender@example.net"},
+//	// &email.Email{
+//	// 	Headers: email.Headers{
+//	// 		Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+//	// 		Sender: &mail.Address{
+//	// 			Name:    "อลิซ ผู้ส่งจดหมาย",
+//	// 			Address: "alis.phusngcdhmay@example.com",
+//	// 		},
+//	// 		From: []*mail.Address{
+//	// 			&mail.Address{
+//	// 				Name:    "อลิซ ผู้ส่งจดหมาย",
+//	// 				Address: "alis.phusngcdhmay@example.com",
+//	// 			},
+//	// 		},
+//	// 		To: []*mail.Address{
+//	// 			&mail.Address{
+//	// 				Name:    "บ๊อบ ผู้รับ",
+//	// 				Address: "bob.phurab@example.com",
+//	// 			},
+//	// 		},
+//	// 		Cc: []*mail.Address{
+//	// 			&mail.Address{
+//	// 				Name:    "แดน ผู้รับ",
+//	// 				Address: "dan.phurab@example.com",
+//	// 			},
+//	// 		},
+//	// 		MessageID: "Message-Id-1@example.com",
+//	// 		InReplyTo: []string{
+//	// 			"Message-Id-0@example.com",
+//	// 		},
+//	// 		References: []string{
+//	// 			"Message-Id-0@example.com",
+//	// 		},
+//	// 		Subject:  "📧 Test แพนแกรมภาษาไทย",
+//	// 		Comments: "Message Header Comment",
+//	// 		Keywords: []string{
+//	// 			"Keyword 1",
+//	// 			"Keyword 2",
+//	// 		},
+//	// 		ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+//	// 		ExtraHeaders: map[string][]string{
+//	// 			"X-Clacks-Overhead": []string{
+//	// 				"GNU Terry Pratchett",
+//	// 			},
+//	// 		},
+//	// 		ContentInfo: &email.ContentInfo{
+//	// 			Type: "multipart/mixed",
+//	// 			TypeParams: map[string]string{
+//	// 				"boundary": "MixedBoundaryString",
+//	// 				"charset":  "tis-620",
+//	// 			},
+//	// 			Disposition:       "",
+//	// 			DispositionParams: map[string]string(nil), // p0
+//	// 			TransferEncoding:  "base64",
+//	// 			ID:                "",
+//	// 			Charset:           "tis-620",
+//	// 		},
+//	// 		Received: nil,
+//	// 	},
+//	// 	Text: ""
+//	// 	EnrichedText: "<bold>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า</bold> ..."
+//	// 	HTML: ""
+//	// 	Files: []*email.File{
+//	// 		&email.File{
+//	// 			FileType: "inline",
+//	// 			Name:     "inline-jpg-image-without-disposition.jpg",
+//	// 			ContentInfo: &email.ContentInfo{
+//	// 				Type: "image/jpeg",
+//	// 				TypeParams: map[string]string{
+//	// 					"name": "inline-jpg-image-without-disposition.jpg",
+//	// 				},
+//	// 				Disposition:       "",
+//	// 				DispositionParams: map[string]string(nil), // p0
+//	// 				TransferEncoding:  "base64",
+//	// 				ID:                "",
+//	// 				Charset:           "tis-620",
+//	// 			},
+//	// 			Data: []byte{
+//	// 				239, 191, 189, 224, 184, 184, 239, 191, 189, ...
+//	// 			},
+//	// 		},
+//	// 		},
+//	// 		&email.File{
+//	// 			FileType: "attachment",
+//	// 			Name:     "attached-pdf-filename.pdf",
+//	// 			ContentInfo: &email.ContentInfo{
+//	// 				Type: "application/pdf",
+//	// 				TypeParams: map[string]string{
+//	// 					"name": "attached-pdf-name.pdf",
+//	// 				},
+//	// 				Disposition: "attachment",
+//	// 				DispositionParams: map[string]string{
+//	// 					"filename": "attached-pdf-filename.pdf",
+//	// 				},
+//	// 				TransferEncoding: "base64",
+//	// 				ID:               "",
+//	// 				Charset:          "tis-620",
+//	// 			},
+//	// 			Data: []byte{
+//	// 				37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, ...
+//	// 			},
+//	// 		},
 //	// }
-//
-//	email.Headers.Subject
-//	// "📧 Test English Pangrams"
-//
-//	email.Headers.To
-//	// []mail.Address{
-//	//  {Name: "Bob Recipient", Address: "bob.recipient@example.com"},
-//	//  {Name: "Carol Recipient", Address: "carol.recipient@example.com"},
-//	// }
-//
-//	email.Headers.Cc
-//	// []mail.Address{
-//	//  {Name: "Dan Recipient", Address: "dan.recipient@example.com"},
-//	//  {Name: "Eve Recipient", Address: "eve.recipient@example.com"},
-//	// }
-//
-//	email.Headers.Bcc
-//	// []mail.Address{
-//	//  {Name: "Frank Recipient", Address: "frank.recipient@example.com"},
-//	//  {Name: "Grace Recipient", Address: "grace.recipient@example.com"},
-//	// }
-//
-// get custom headers:
-//
-//	email.Headers.ExtraHeaders
-//	// map[string][]string{
-//	//    "X-Clacks-Overhead": {"GNU Terry Pratchett"},
-//	// }
-//
-// get decoded bodies:
-//
-//	email.Text
-//	// "The quick brown fox jumps over a lazy dog..."
-//
-//	email.HTML
-//	// "<html><div dir="ltr"><p>The quick brown fox jumps over a lazy dog..."
-//
-// Both inline and attached files are stored in a slice. By default these
-// are read into a `Data` []byte slice but direct access can be made to the
-// underlying `io.Reader` by using a custom file processing func.
-//
-//	Files: []*email.File{
-//		{
-//			FileType: "inline",
-//			ContentTypeHeader: email.ContentTypeHeader{
-//				ContentType: "image/jpeg",
-//				Params: map[string]string{
-//					"name": "inline-jpg-image-name.jpg",
-//				},
-//			},
-//			ContentDispositionHeader: email.ContentDispositionHeader{
-//				ContentDisposition: "inline",
-//				Params: map[string]string{
-//					"filename": "inline-jpg-image-filename.jpg",
-//				},
-//			},
-//			Name: "inline-jpg-image-filename.jpg",
-//			Data: []byte{
-//				255, 216, 255, 219, 0, 67, 0, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3,
-//				3, 3, 4, 6, 4, 4, 4, 4, 4, 8, 6, 6, 5, 6, 9, 8, 10, 10, 9, 8, 9, 9,
-//				10, 12, 15, 12, 10, 11, 14, 11, 9, 9, 13, 17, 13, 14, 15, 16, 16,
-//				17, 16, 10, 12, 18, 19, 18, 16, 19, 15, 16, 16, 16, 255, 201, 0,
-//				11, 8, 0, 1, 0, 1, 1, 1, 17, 0, 255, 204, 0, 6, 0, 16, 16, 5, 255,
-//				218, 0, 8, 1, 1, 0, 0, 63, 0, 210, 207, 32, 255, 217,
-//			},
-//		},
-//		{
-//			FileType: "attached",
-//			Name:     "attached-pdf-filename.pdf",
-//			ContentTypeHeader: email.ContentTypeHeader{
-//				ContentType: "application/pdf",
-//				Params: map[string]string{
-//					"name": "attached-pdf-name.pdf",
-//				},
-//			},
-//			ContentDispositionHeader: email.ContentDispositionHeader{
-//				ContentDisposition: "attachment",
-//				Params: map[string]string{
-//					"filename": "attached-pdf-filename.pdf",
-//				},
-//			},
-//			Data: []byte{
-//				37, 80, 68, 70, 45, 49, 46, 13, 116, 114, 97, 105, 108, 101, 114,
-//				60, 60, 47, 82, 111, 111, 116, 60, 60, 47, 80, 97, 103, 101, 115,
-//				60, 60, 47, 75, 105, 100, 115, 91, 60, 60, 47, 77, 101, 100, 105,
-//				97, 66, 111, 120, 91, 48, 32, 48, 32, 51, 32, 51, 93, 62, 62, 93,
-//				62, 62, 62, 62, 62, 62,
-//			},
-//		},
-//	}
+//	```
 //
 // # Options
 //
@@ -154,27 +154,21 @@
 // first, which is the default behaviour. The `WithSaveFilesToDirectory`
 // option is an example of such a custom func.
 //
-// An example:
+// As shown in the [parser/optspkg_test.go](parser/optspkg_test.go)
+// package test, `WithCustomFileFunc` can be used to, for example, only
+// process `image/jpeg` files. More examples are shown in
+// [parser/opts_test.go](parser/opts_test.go), for example:
 //
-//	opt := parser.WithHeadersOnly() // pass the headers only option
+//	opt := parser.WithHeadersOnly() // the headers only option
 //	p := letters.NewParser(opt, parser.WithVerbose()) // options can be chained
 //	parsedEmail, err := p.Parse(rawEmail)
 //	if err != nil {
 //		return fmt.Errorf("error while parsing email headers: %s", err)
 //	}
-//
-// See the [parser] package and tests for more details.
-//
-// # Language and Encoding Support
-//
-// The same parser and methods will work for other languages, text encodings,
-// and transfer-encodings.
-//
-// [net/mail]: https://pkg.go.dev/net/mail
 package letters
 
 import (
-	"github.com/mnako/letters/parser"
+	"github.com/rorycl/letters/parser"
 )
 
 func NewParser(options ...parser.Opt) *parser.Parser {

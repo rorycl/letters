@@ -6,8 +6,8 @@ import (
 	"io"
 	"strings"
 
-	"github.com/mnako/letters/decoders"
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/decoders"
+	"github.com/rorycl/letters/email"
 )
 
 // parseBody parses the body of an email

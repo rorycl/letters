@@ -7,8 +7,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/mnako/letters/email"
-	// "github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/rorycl/letters/email"
 )
 
 func TestDecodeHeader(t *testing.T) {

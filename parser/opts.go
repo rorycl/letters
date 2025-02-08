@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/email"
 )
 
 // WithVerbose is presently a no-op option for testing if options are

@@ -5,8 +5,8 @@ import (
 	"io"
 	"path/filepath"
 
-	"github.com/mnako/letters/decoders"
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/decoders"
+	"github.com/rorycl/letters/email"
 )
 
 // parseFile parses inline and attached files from email parts, using

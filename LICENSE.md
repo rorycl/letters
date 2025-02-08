@@ -1,3 +1,7 @@
+Copyright (c) 2025 Rory CL
+
+My contributions are provided under the MIT licence.
+
 Copyright (c) 2019 Michal Nakoneczny
 
 Permission is hereby granted, free of charge, to any person obtaining

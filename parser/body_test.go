@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/email"
 )
 
 func TestParseBody(t *testing.T) {

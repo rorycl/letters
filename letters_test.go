@@ -8,9 +8,9 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/mnako/letters"
-	"github.com/mnako/letters/email"
-	"github.com/mnako/letters/parser"
+	"github.com/rorycl/letters"
+	"github.com/rorycl/letters/email"
+	"github.com/rorycl/letters/parser"
 )
 
 func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmail *email.Email) {

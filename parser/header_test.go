@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/email"
 
 	"github.com/google/go-cmp/cmp"
 )

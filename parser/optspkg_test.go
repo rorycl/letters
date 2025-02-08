@@ -10,8 +10,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/mnako/letters/email"
-	"github.com/mnako/letters/parser"
+	"github.com/rorycl/letters/email"
+	"github.com/rorycl/letters/parser"
 )
 
 func TestPkgOptVerbose(t *testing.T) {

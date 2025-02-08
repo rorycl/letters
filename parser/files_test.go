@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/email"
 )
 
 func TestParseFile(t *testing.T) {

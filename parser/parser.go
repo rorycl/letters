@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mnako/letters/email"
+	"github.com/rorycl/letters/email"
 )
 
 // UnknownContentTypeError reports an unknown Content Type
