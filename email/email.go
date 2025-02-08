@@ -1,6 +1,6 @@
 // Package email holds the shared Email type and sub-types used by the
 // letters packages.
-package email
+package email // import "github.com/rorycl/letters/email"
 
 import (
 	"io"

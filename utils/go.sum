@@ -1,0 +1,13 @@
+github.com/davecgh/go-spew v0.0.0-20161028175848-04cdfd42973b/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/pmezard/go-difflib v0.0.0-20151028094244-d8ed2627bdf0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/rorycl/base64toraw v0.0.1 h1:e+cGVPQ0m1bQzhvLf/G4Lt26EgpntBxJ2xYYwsMCHd0=
+github.com/rorycl/base64toraw v0.0.1/go.mod h1:H1r4WeGZyUTaKDLWexP1E6CVvb5IPDXYtpu2NP6ijLA=
+github.com/rorycl/letters v0.0.1 h1:YqZ5uclRC//kixhcdrBKqGNS1i26aRhefGyQxcC4LX4=
+github.com/rorycl/letters v0.0.1/go.mod h1:DZ3FvZgdd7wRnoQnaVOsz2Ayrb8/2oLhbBbLVP0yZ9I=
+github.com/sanity-io/litter v1.5.6 h1:hCFycYzhRnW4niFbbmR7QKdmds69PbVa/sNmEN5euSU=
+github.com/sanity-io/litter v1.5.6/go.mod h1:9gzJgR2i4ZpjZHsKvUXIRQVk7P+yM3e+jAF7bU2UI5U=
+github.com/stretchr/testify v0.0.0-20161117074351-18a02ba4a312/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
+golang.org/x/net v0.34.0 h1:Mb7Mrk043xzHgnRM88suvJFwzVrRfHEHJEl5/71CKw0=
+golang.org/x/net v0.34.0/go.mod h1:di0qlW3YNM5oh6GqDGQr92MyTozJPmybPK4Ev/Gm31k=
+golang.org/x/text v0.22.0 h1:bofq7m3/HAFvbF51jz3Q9wLg3jkvSPuiZu/pD1XwgtM=
+golang.org/x/text v0.22.0/go.mod h1:YRoo4H8PVmsu+E3Ou7cqLVH8oXWIHVoX0jqUWALQhfY=
