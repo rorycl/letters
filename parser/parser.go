@@ -172,7 +172,7 @@ func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary 
 		// extract content information
 		contentInfo, err := email.ExtractContentInfo(part.Header, p.contentInfo)
 		if err != nil {
-			return fmt.Errorf("content extraction errror: %w", err)
+			return fmt.Errorf("content extraction error: %w", err)
 		}
 
 		// commence extraction of data with attached file
@@ -210,8 +210,8 @@ func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary 
 			continue
 		}
 
-		// process html content
-		if contentInfo.Type == "text/html" {
+		// process html content (including Accelerated Mobile Pages)
+		if contentInfo.Type == "text/html" || contentInfo.Type == "text/x-amp-html" {
 			partHtmlBody, err := p.parseText(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse html text: %w", err)
@@ -253,8 +253,14 @@ func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary 
 			continue
 		}
 
+		// types to ignore
+		switch contentInfo.Type {
+		case "text/calendar":
+			continue
+		}
+
 		// fallthrough error
-		return &UnknownContentTypeError{contentType: parentCI.Type}
+		return &UnknownContentTypeError{contentType: contentInfo.Type}
 	}
 
 	return nil

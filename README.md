@@ -146,7 +146,7 @@ The `WithoutAttachments` and `WithHeadersOnly` options determine if only part
 of an email will be processed.
 
 The date and address "With" options allow the provision of custom funcs to
-override the [net/mail] funcs normally used. For example it might be necessary
+override the `net/mail` funcs normally used. For example it might be necessary
 to extend the date parsing capabilities to deal with poorly formatted date
 strings produced by older SMTP servers.
 

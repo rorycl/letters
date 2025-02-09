@@ -34,20 +34,27 @@ func TestIsExplicitHeader(t *testing.T) {
 func TestParseAddressSingle(t *testing.T) {
 	p := NewParser()
 	tests := []struct {
+		ok            bool
 		stringAddress string
 		name          string
 		address       string
 	}{
-		{"<test@test.com>", "", "test@test.com"},
-		{"Ronny Burke <ronnie@example.com>", "Ronny Burke", "ronnie@example.com"},
-		{`"=?UTF-8?B?SHViZXJ0IFNjaMO2bG5hc3Q=?=" <localpart@domain.tld>`, "Hubert Schölnast", "localpart@domain.tld"},
-		{`=?ISO-8859-2?Q?"Odbieraj=B1ca,_Karolina"?= <karolina.odbierajaca@example.net>`, "Odbierająca, Karolina", "karolina.odbierajaca@example.net"},
+		{true, "<test@test.com>", "", "test@test.com"},
+		{true, "Ronny Burke <ronnie@example.com>", "Ronny Burke", "ronnie@example.com"},
+		{true, `"=?UTF-8?B?SHViZXJ0IFNjaMO2bG5hc3Q=?=" <localpart@domain.tld>`, "Hubert Schölnast", "localpart@domain.tld"},
+		{true, `=?ISO-8859-2?Q?"Odbieraj=B1ca,_Karolina"?= <karolina.odbierajaca@example.net>`, "Odbierająca, Karolina", "karolina.odbierajaca@example.net"},
+		{false, `=?utf-8?Q?Zo=C3=AB_Kooyman=2C_FSF?= <info@fsf.org>`, "", ""}, // mail: no angle-addr
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
 			addr, err := p.parseAddress(tt.stringAddress)
 			if err != nil {
-				t.Fatal(err)
+				if tt.ok {
+					t.Fatal(err)
+				} else {
+					fmt.Println(err)
+					return
+				}
 			}
 			if got, want := addr.Name, tt.name; got != want {
 				t.Errorf("got %s want %s", got, want)

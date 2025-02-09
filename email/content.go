@@ -167,7 +167,7 @@ var contentTransferEncodings = []string{
 // ExtractContentInfo extracts information from a headers map from
 // either a net/mail.Message.Header or mime/multipart.Part.Header, whose
 // underlying type is a map[string][]string.
-// Fallback information may be provided by a parent ConentInfo instance.
+// Fallback information may be provided by a parent ContentInfo instance.
 func ExtractContentInfo(headers map[string][]string, parentCI *ContentInfo) (*ContentInfo, error) {
 	get := func(key string) string {
 		if headers == nil {
