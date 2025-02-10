@@ -40,6 +40,9 @@ type Opt func(p *Parser)
 type Parser struct {
 	// what parts of the email to process (default all)
 	processType typeOfProcessing
+	// skipContentTypes is a list of content types to skip
+	skipContentTypes []string
+
 	// email to be returned, for incremental processing
 	email *email.Email
 
@@ -66,8 +69,8 @@ type Parser struct {
 	verbose bool
 }
 
-// NewParser initialises a new Parser. The default parser can be
-// changed using options.
+// NewParser initialises a new Parser. The default parser can be changed
+// using options.
 func NewParser(options ...Opt) *Parser {
 	p := &Parser{
 
@@ -126,12 +129,14 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 	}
 
 	switch ct := p.contentInfo.Type; { // true switch
+
 	case ct == "text/plain", ct == "text/enriched", ct == "text/html":
 		// parse body
 		err = p.parseBody()
 		if err != nil {
 			return nil, err
 		}
+
 	case strings.HasPrefix(ct, "multipart/"):
 		// parse parts
 		err = p.parsePart(
@@ -142,6 +147,7 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 		if err != nil {
 			return nil, err
 		}
+
 	default:
 		// parse attachment
 		err = p.parseFile(p.msg.Body, p.contentInfo)
@@ -173,6 +179,11 @@ func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary 
 		contentInfo, err := email.ExtractContentInfo(part.Header, p.contentInfo)
 		if err != nil {
 			return fmt.Errorf("content extraction error: %w", err)
+		}
+
+		// skip part if the content type is in p.skipContentTypes
+		if p.inSkipContentTypes(contentInfo.Type) {
+			continue
 		}
 
 		// commence extraction of data with attached file
@@ -210,8 +221,8 @@ func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary 
 			continue
 		}
 
-		// process html content (including Accelerated Mobile Pages)
-		if contentInfo.Type == "text/html" || contentInfo.Type == "text/x-amp-html" {
+		// process html content
+		if contentInfo.Type == "text/html" {
 			partHtmlBody, err := p.parseText(part, contentInfo)
 			if err != nil {
 				return fmt.Errorf("cannot parse html text: %w", err)
@@ -254,8 +265,14 @@ func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary 
 		}
 
 		// types to ignore
+		// Todo/fixme
+		// This section needs to be expanded or, alternatively and more
+		// sensibly, expanded and moved to contentInfo
+
+		// unhandled types fixme
 		switch contentInfo.Type {
 		case "text/calendar":
+			fmt.Println("skipping text/calendar content-type")
 			continue
 		}
 
