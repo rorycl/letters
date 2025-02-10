@@ -1,13 +1,22 @@
-# Letters, an email parsing package for go
+# Letters
+an email parsing package for go
 
 This is a fork of [mnako/letters](https://github.com/mnako/letters), a
-minimalistic Golang library for parsing plaintext and MIME emails.
+minimalistic Golang library for parsing plain and MIME emails. Thanks to
+@mnako and contributors, letters has great support for languages other
+than English, text and transfer encodings.
 
-Thanks to @mnako and contributors, letters has great support for
-languages other than English, text encodings and transfer-encodings.
+This fork (forked at
+["db1b793c8119d8ed3d575f44df4391262829d1a5"](https://github.com/mnako/letters/commit/db1b793c8119d8ed3d575f44df4391262829d1a5)
+version v0.2.3) focuses on extensibility through modularisation as set
+out in [PR #124](https://github.com/mnako/letters/pull/124). This
+library also provides improved performance and customisation through
+user-defined funcs, for example for efficient attachment processing.
 
-This fork focuses on performance, memory efficiency and extensibility
-through modularisation.
+Future plans include making parsing errors, such as for invalid email
+addresses, optionally non-fatal.
+
+github.com/rorycl/letters v0.1.1 10 February 2025
 
 ## Quickstart
 
@@ -132,18 +141,33 @@ parsedEmail, err := p.Parse(reader)
 Various options are provided for customising the Parser, including:
 
 ```go
+// skip content types
+func WithSkipContentTypes(skipContentTypes []string) Opt
+// provide a custom address processing function
 func WithCustomAddressFunc(af func(string) (*mail.Address, error)) Opt
+// provide a custom processing function for string lists of addresses
 func WithCustomAddressesFunc(af func(list string) ([]*mail.Address, error)) Opt
+// provide a custom date processing function
 func WithCustomDateFunc(df func(string) (time.Time, error)) Opt
+// provide a custom file processing function
 func WithCustomFileFunc(ff func(*email.File) error) Opt
+// save files to the stated directory (an example of WithCustomFileFunc)
 func WithSaveFilesToDirectory(dir string) Opt
+// only process headers
 func WithHeadersOnly() Opt
+// skip processing attachments
 func WithoutAttachments() Opt
+// show verbose processing info (currently a noop)
 func WithVerbose() Opt
 ```
 
+More than one option can be supplied.
+
 The `WithoutAttachments` and `WithHeadersOnly` options determine if only part
 of an email will be processed.
+
+The `WithSkipContentTypes` allows the user to skip processing MIME
+message parts with the supplied content-types.
 
 The date and address "With" options allow the provision of custom funcs to
 override the `net/mail` funcs normally used. For example it might be necessary
@@ -169,4 +193,3 @@ if err != nil {
 	return fmt.Errorf("error while parsing email headers: %s", err)
 }
 ```
-
