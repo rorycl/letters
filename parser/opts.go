@@ -27,6 +27,24 @@ func WithHeadersOnly() Opt {
 	}
 }
 
+// WithSkipContentTypes allows the user to provide a slice of content
+// types whose email parts will be skipped in processing.
+func WithSkipContentTypes(skipContentTypes []string) Opt {
+	return func(p *Parser) {
+		p.skipContentTypes = skipContentTypes
+	}
+}
+
+// inSkipContentTypes determines if a content-type should be skipped
+func (p *Parser) inSkipContentTypes(ct string) bool {
+	for _, s := range p.skipContentTypes {
+		if s == ct {
+			return true
+		}
+	}
+	return false
+}
+
 // WithoutAttachments skips parsing email attachments, which often
 // provides a speedup in processing.
 func WithoutAttachments() Opt {
@@ -103,3 +121,13 @@ func WithSaveFilesToDirectory(dir string) Opt {
 		}
 	}
 }
+
+// verifyOpts verifies that the user-supplied options are valid
+// func (p *Parser) verifyOpts() error {
+// 	for _, s := range p.skipContentTypes {
+// 		if !strings.Contains(s, "/") {
+// 			return fmt.Errorf("content-type %s invalid", s)
+// 		}
+// 	}
+// 	return nil
+// }

@@ -27,6 +27,7 @@ func TestPkgNoAttachments(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer c.Close()
 	e, err := p.Parse(c)
 	if err != nil {
 		t.Fatal(err)

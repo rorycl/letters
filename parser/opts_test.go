@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"net/mail"
 	"os"
 	"slices"
@@ -24,6 +25,67 @@ func TestOptWithoutAttachments(t *testing.T) {
 	if p.processType != noAttachments {
 		t.Errorf("processType got %s want %s", p.processType, noAttachments)
 	}
+}
+
+func TestOptSkipContentTypes(t *testing.T) {
+
+	tests := []struct {
+		skips         []string
+		skipLen       int
+		skipType      string
+		skipTypeOK    bool
+		attachmentsNo int
+	}{
+		{
+			skips:         []string{},
+			skipLen:       0,
+			skipType:      "image/png",
+			skipTypeOK:    false,
+			attachmentsNo: 3,
+		},
+		{
+			skips:         []string{"image/png"},
+			skipLen:       1,
+			skipType:      "image/png",
+			skipTypeOK:    true,
+			attachmentsNo: 2,
+		},
+		{
+			skips:         []string{"image/png", "image/jpeg"},
+			skipLen:       2,
+			skipType:      "image/jpeg",
+			skipTypeOK:    true,
+			attachmentsNo: 0,
+		},
+	}
+
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
+			c, err := os.Open("testdata/cats.eml")
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer c.Close()
+			skipOpt := WithSkipContentTypes(tt.skips)
+			p := NewParser(skipOpt)
+			em, err := p.Parse(c)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if got, want := len(p.skipContentTypes), tt.skipLen; got != want {
+				t.Errorf("got %d want %d skip content types", got, want)
+			}
+			if got, want := p.inSkipContentTypes(tt.skipType), tt.skipTypeOK; got != want {
+				t.Errorf("got %t want %t skip %s", got, want, tt.skipType)
+			}
+			if got, want := len(em.Files), tt.attachmentsNo; got != want {
+				t.Errorf("got %d want %d attachments", got, want)
+			}
+
+		})
+	}
+
 }
 
 func TestOptAddressCustomFunc(t *testing.T) {
