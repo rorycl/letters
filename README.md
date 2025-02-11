@@ -1,22 +1,19 @@
 # Letters
-an email parsing package for go
+Email parsing for go.
 
 This is a fork of [mnako/letters](https://github.com/mnako/letters), a
 minimalistic Golang library for parsing plain and MIME emails. Thanks to
 @mnako and contributors, letters has great support for languages other
 than English, text and transfer encodings.
 
-This fork (forked at
-["db1b793c8119d8ed3d575f44df4391262829d1a5"](https://github.com/mnako/letters/commit/db1b793c8119d8ed3d575f44df4391262829d1a5)
-version v0.2.3) focuses on extensibility through modularisation as set
-out in [PR #124](https://github.com/mnako/letters/pull/124). This
-library also provides improved performance and customisation through
-user-defined funcs, for example for efficient attachment processing.
+This fork (at [#9d1a5, v0.2.3](https://github.com/mnako/letters/commit/db1b793c8119d8ed3d575f44df4391262829d1a5))
+of letters focuses on extensibility through modularisation as set out in
+[PR #124](https://github.com/mnako/letters/pull/124). This library also
+provides improved performance and customisation through user-defined
+funcs, for example for efficient inline and attachment file processing.
 
 Future plans include making parsing errors, such as for invalid email
 addresses, optionally non-fatal.
-
-github.com/rorycl/letters v0.1.1 10 February 2025
 
 ## Quickstart
 
@@ -188,7 +185,7 @@ test, `WithCustomFileFunc` can be used to, for example, only process
 ```go
 opt := parser.WithHeadersOnly() // the headers only option
 p := letters.NewParser(opt, parser.WithVerbose()) // options can be chained
-parsedEmail, err := p.Parse(rawEmail)
+parsedEmail, err := p.Parse(emailReader)
 if err != nil {
 	return fmt.Errorf("error while parsing email headers: %s", err)
 }
