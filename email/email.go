@@ -1,5 +1,8 @@
 // Package email holds the shared Email type and sub-types used by the
-// letters packages.
+// letters packages. `Email` is the type returned from
+// `letters.Parser.Parse()`, while `ContentInfo` provides the
+// Content-Type, Content-Disposition and other related information
+// concerning email and MIME part content* data.
 package email // import "github.com/rorycl/letters/email"
 
 import (

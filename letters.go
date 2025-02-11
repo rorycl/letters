@@ -131,17 +131,30 @@
 //
 // Various options are provided for customising the Parser, including:
 //
+//	// skip content types
+//	func WithSkipContentTypes(skipContentTypes []string) Opt
+//	// provide a custom address processing function
 //	func WithCustomAddressFunc(af func(string) (*mail.Address, error)) Opt
+//	// provide a custom processing function for string lists of addresses
 //	func WithCustomAddressesFunc(af func(list string) ([]*mail.Address, error)) Opt
+//	// provide a custom date processing function
 //	func WithCustomDateFunc(df func(string) (time.Time, error)) Opt
+//	// provide a custom file processing function
 //	func WithCustomFileFunc(ff func(*email.File) error) Opt
+//	// save files to the stated directory (an example of WithCustomFileFunc)
 //	func WithSaveFilesToDirectory(dir string) Opt
+//	// only process headers
 //	func WithHeadersOnly() Opt
+//	// skip processing attachments
 //	func WithoutAttachments() Opt
+//	// show verbose processing info (currently a noop)
 //	func WithVerbose() Opt
 //
 // The `WithoutAttachments` and `WithHeadersOnly` options determine if
 // only part of an email will be processed.
+//
+// The `WithSkipContentTypes` allows the user to skip processing MIME
+// message parts with the supplied content-types.
 //
 // The date and address "With" options allow the provision of custom
 // funcs to override the [net/mail] funcs normally used. For example it
@@ -161,7 +174,7 @@
 //
 //	opt := parser.WithHeadersOnly() // the headers only option
 //	p := letters.NewParser(opt, parser.WithVerbose()) // options can be chained
-//	parsedEmail, err := p.Parse(rawEmail)
+//	parsedEmail, err := p.Parse(emailReader)
 //	if err != nil {
 //		return fmt.Errorf("error while parsing email headers: %s", err)
 //	}

@@ -23,7 +23,10 @@ func (e *UnknownContentTypeError) Error() string {
 	return fmt.Sprintf("unknown Content-Type %q", e.contentType)
 }
 
-// typeOfProcessing determines the type of processing used by the
+// typeOfProcessing determines the type of processing to be done by the
+// Parser. If processing many emails it will be much more efficient to
+// use the `noAttachments` or `headersOnly` processing types if the
+// whole email isn't needed.
 type typeOfProcessing string
 
 const (
@@ -34,7 +37,8 @@ const (
 
 // Opt is a parser option type provided as a closure to add options to a
 // parser default instance instantiated by NewParser. The options are
-// held in the [opts] subpackage.
+// held in opts.go providing closures returning an Opt such as
+// WithHeadersOnly().
 type Opt func(p *Parser)
 
 type Parser struct {
@@ -70,7 +74,7 @@ type Parser struct {
 }
 
 // NewParser initialises a new Parser. The default parser can be changed
-// using options.
+// using options returning an Opt.
 func NewParser(options ...Opt) *Parser {
 	p := &Parser{
 
@@ -105,7 +109,7 @@ func NewParser(options ...Opt) *Parser {
 	return p
 }
 
-// Parse is the main entry point of letters
+// Parse is the main entry point of letters.
 func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 	var err error
 	p.msg, err = mail.ReadMessage(r)
@@ -158,7 +162,8 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 	return p.email, err
 }
 
-// parsePart parses the parts of a multipart message
+// parsePart parses the parts of a multipart message and may be called
+// recursively.
 func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary string) error {
 
 	multipartReader := multipart.NewReader(msg, boundary)

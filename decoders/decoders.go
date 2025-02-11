@@ -1,5 +1,6 @@
 // Package decoders provides two functions for decoding parts of an
-// email.
+// email. The decoders not only decode between different charsets to
+// UTF8, but also from base64 and quoted-printable transfer-encodings.
 package decoders
 
 import (
@@ -17,6 +18,13 @@ import (
 	"github.com/rorycl/letters/email"
 )
 
+// DecodeHeader decodes a string, such as an email name and address
+// pair, from a local to UTF8 charset. Note that the mime function
+// called by DecodeHeader expects text that does not fail the following
+// test:
+//
+//	len(word) < 8 || !strings.HasPrefix(word, "=?") ||
+//	!strings.HasSuffix(word, "?=") || strings.Count(word, "?") != 4
 func DecodeHeader(s string) (string, error) {
 	charsetReader := func(label string, input io.Reader) (io.Reader, error) {
 		enc, _ := charset.Lookup(label)

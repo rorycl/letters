@@ -10,9 +10,9 @@ import (
 	"golang.org/x/text/encoding"
 )
 
-// Relevant RFCs and related information concerning Content* fields
-// which are used to describe MIME (Multipurpose Internet Mail
-// Extensions) email messages.
+// Noted below are relevant RFCs and related information concerning
+// Content* fields which are used to describe MIME (Multipurpose
+// Internet Mail Extensions) email messages.
 //
 // Content-Type:
 // https://datatracker.ietf.org/doc/html/rfc2045#page-10
