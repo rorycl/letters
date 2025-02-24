@@ -7,8 +7,9 @@ replace github.com/rorycl/letters => ../
 replace github.com/rorycl/letters/email => ../email/
 
 require (
-	github.com/rorycl/letters v0.1.1
-	github.com/sanity-io/litter v1.5.6
+	github.com/google/go-cmp v0.7.0
+	github.com/rorycl/letters v0.1.2
+	github.com/sanity-io/litter v1.5.8
 )
 
 require (
