@@ -66,7 +66,7 @@ func TestParseEmailEnglishEmpty(t *testing.T) {
 	fp := "tests/test_english_empty.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date:            time.Time(time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)),
+			Date:            time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC),
 			Sender:          nil,
 			From:            nil,
 			ReplyTo:         nil,
@@ -79,7 +79,7 @@ func TestParseEmailEnglishEmpty(t *testing.T) {
 			Subject:         "",
 			Comments:        "",
 			Keywords:        nil,
-			ResentDate:      time.Time(time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)),
+			ResentDate:      time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC),
 			ResentFrom:      nil,
 			ResentSender:    nil,
 			ResentTo:        nil,
@@ -112,7 +112,7 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 	fp := "tests/test_english_no_text_content.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -169,7 +169,7 @@ func TestParseEmailEnglishNoTextContent(t *testing.T) {
 			Subject:         "Test No Text Content, Attachment Only",
 			Comments:        "",
 			Keywords:        nil,
-			ResentDate:      time.Time(time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)),
+			ResentDate:      time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC),
 			ResentFrom:      nil,
 			ResentSender:    nil,
 			ResentTo:        nil,
@@ -236,7 +236,7 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -300,7 +300,7 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate:      time.Time(time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)),
+			ResentDate:      time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC),
 			ResentFrom:      nil,
 			ResentSender:    nil,
 			ResentTo:        nil,
@@ -329,19 +329,25 @@ func TestParseEmailHeadersEnglishPlaintextAsciiOver7bit(t *testing.T) {
 			},
 			Received: nil,
 		},
-		Text:         "",
+		Text: "The quick brown fox jumps over a lazy dog.\n" +
+			"Glib jocks quiz nymph to vex dwarf.\n" +
+			"Sphinx of black quartz, judge my vow.\n" +
+			"How vexingly quick daft zebras jump!\n" +
+			"The five boxing wizards jump quickly.\n" +
+			"Jackdaws love my big sphinx of quartz.\n" +
+			"Pack my box with five dozen liquor jugs.",
 		EnrichedText: "",
 		HTML:         "",
 		Files:        nil,
 	}
-	testEmailHeadersFromFile(t, fp, expectedEmail)
+	testEmailFromFile(t, fp, expectedEmail)
 }
 
 func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_plaintext_ascii_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -405,7 +411,7 @@ func TestParseEmailEnglishPlaintextAsciiOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate:      time.Time(time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)),
+			ResentDate:      time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC),
 			ResentFrom:      nil,
 			ResentSender:    nil,
 			ResentTo:        nil,
@@ -452,7 +458,7 @@ func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {
 	fp := "tests/test_english_plaintext_ascii_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -516,7 +522,7 @@ func TestParseEmailEnglishPlaintextAsciiOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -602,7 +608,7 @@ func TestParseEmailEnglishPlaintextAsciiOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_english_plaintext_ascii_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -666,7 +672,7 @@ func TestParseEmailEnglishPlaintextAsciiOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -752,7 +758,7 @@ func TestParseEmailEnglishPlaintextUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_english_plaintext_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -816,7 +822,7 @@ func TestParseEmailEnglishPlaintextUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -902,7 +908,7 @@ func TestParseEmailEnglishPlaintextUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_english_plaintext_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -966,7 +972,7 @@ func TestParseEmailEnglishPlaintextUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -1052,7 +1058,7 @@ func TestParseEmailEnglishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_english_plaintext_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -1116,7 +1122,7 @@ func TestParseEmailEnglishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -1202,7 +1208,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_multipart_related_ascii_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -1266,7 +1272,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -1395,7 +1401,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_related_ascii_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -1459,7 +1465,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -1588,7 +1594,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverQuotedprintable(t *testing.T)
 	fp := "tests/test_english_multipart_related_ascii_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -1652,7 +1658,7 @@ func TestParseEmailEnglishMultipartRelatedAsciiOverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -1781,7 +1787,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_english_multipart_related_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -1845,7 +1851,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -1975,7 +1981,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_related_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -2039,7 +2045,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -2169,7 +2175,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 	fp := "tests/test_english_multipart_related_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -2233,7 +2239,7 @@ func TestParseEmailEnglishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -2363,7 +2369,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_ascii_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -2427,7 +2433,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -2687,7 +2693,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_ascii_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -2751,7 +2757,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -3011,7 +3017,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_ascii_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -3075,7 +3081,7 @@ func TestParseEmailEnglishMultipartMixedAsciiOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -3335,7 +3341,7 @@ func TestParseEmailEnglishMultipartMixedUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -3399,7 +3405,7 @@ func TestParseEmailEnglishMultipartMixedUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -3661,7 +3667,7 @@ func TestParseEmailEnglishMultipartMixedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -3725,7 +3731,7 @@ func TestParseEmailEnglishMultipartMixedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -3987,7 +3993,7 @@ func TestParseEmailEnglishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_english_multipart_mixed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -4051,7 +4057,7 @@ func TestParseEmailEnglishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -4313,7 +4319,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOver7bit(t *testing.T) {
 	fp := "tests/test_english_multipart_signed_ascii_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -4377,7 +4383,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -4500,7 +4506,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_signed_ascii_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -4564,7 +4570,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -4687,7 +4693,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOverQuotedprintable(t *testing.T) 
 	fp := "tests/test_english_multipart_signed_ascii_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -4751,7 +4757,7 @@ func TestParseEmailEnglishMultipartSignedAsciiOverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -4874,7 +4880,7 @@ func TestParseEmailEnglishMultipartSignedUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_english_multipart_signed_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -4938,7 +4944,7 @@ func TestParseEmailEnglishMultipartSignedUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -5062,7 +5068,7 @@ func TestParseEmailEnglishMultipartSignedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_english_multipart_signed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -5126,7 +5132,7 @@ func TestParseEmailEnglishMultipartSignedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -5250,7 +5256,7 @@ func TestParseEmailEnglishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_english_multipart_signed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sender",
 				Address: "alice.sender@example.com",
@@ -5314,7 +5320,7 @@ func TestParseEmailEnglishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 6, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sender",
@@ -5438,7 +5444,7 @@ func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
 	fp := "tests/test_chinese_plaintext_gb18030_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -5502,7 +5508,7 @@ func TestParseEmailChinesePlaintextGb18030OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -5591,7 +5597,7 @@ func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_chinese_plaintext_gb18030_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -5655,7 +5661,7 @@ func TestParseEmailChinesePlaintextGb18030OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -5744,7 +5750,7 @@ func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
 	fp := "tests/test_chinese_plaintext_gbk_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -5808,7 +5814,7 @@ func TestParseEmailChinesePlaintextGbkOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -5897,7 +5903,7 @@ func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_chinese_plaintext_gbk_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -5961,7 +5967,7 @@ func TestParseEmailChinesePlaintextGbkOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -6050,7 +6056,7 @@ func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
 	fp := "tests/test_chinese_multipart_related_gb18030_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -6114,7 +6120,7 @@ func TestParseEmailChineseMultipartRelatedGb18030OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -6253,7 +6259,7 @@ func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.
 	fp := "tests/test_chinese_multipart_related_gb18030_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -6317,7 +6323,7 @@ func TestParseEmailChineseMultipartRelatedGb18030OverQuotedprintable(t *testing.
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -6456,7 +6462,7 @@ func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
 	fp := "tests/test_chinese_multipart_related_gbk_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -6520,7 +6526,7 @@ func TestParseEmailChineseMultipartRelatedGbkOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -6659,7 +6665,7 @@ func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_chinese_multipart_related_gbk_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -6723,7 +6729,7 @@ func TestParseEmailChineseMultipartRelatedGbkOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -6862,7 +6868,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 	fp := "tests/test_chinese_multipart_mixed_gb18030_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -6926,7 +6932,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -7197,7 +7203,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 	fp := "tests/test_chinese_multipart_mixed_gb18030_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -7261,7 +7267,7 @@ func TestParseEmailChineseMultipartMixedGb18030OverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -7532,7 +7538,7 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 	fp := "tests/test_chinese_multipart_mixed_gbk_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -7596,7 +7602,7 @@ func TestParseEmailChineseMultipartMixedGbkOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -7867,7 +7873,7 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_chinese_multipart_mixed_gbk_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -7931,7 +7937,7 @@ func TestParseEmailChineseMultipartMixedGbkOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -8202,7 +8208,7 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 	fp := "tests/test_chinese_multipart_signed_gb18030_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -8266,7 +8272,7 @@ func TestParseEmailChineseMultipartSignedGb18030OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -8390,7 +8396,7 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 	fp := "tests/test_chinese_multipart_signed_gb18030_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -8454,7 +8460,7 @@ func TestParseEmailChineseMultipartSignedGb18030OverQuotedprintable(t *testing.T
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -8578,7 +8584,7 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 	fp := "tests/test_chinese_multipart_signed_gbk_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -8642,7 +8648,7 @@ func TestParseEmailChineseMultipartSignedGbkOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -8766,7 +8772,7 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_chinese_multipart_signed_gbk_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "艾莉絲 发件人",
 				Address: "alice.fajianren@example.com",
@@ -8830,7 +8836,7 @@ func TestParseEmailChineseMultipartSignedGbkOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 23, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "艾莉絲 发件人",
@@ -8954,7 +8960,7 @@ func TestParseEmailFinnishPlaintextUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_plaintext_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9018,7 +9024,7 @@ func TestParseEmailFinnishPlaintextUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -9103,7 +9109,7 @@ func TestParseEmailFinnishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_finnish_plaintext_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9167,7 +9173,7 @@ func TestParseEmailFinnishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -9252,7 +9258,7 @@ func TestParseEmailFinnishPlaintextIso885915OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_plaintext_iso-8859-15_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9316,7 +9322,7 @@ func TestParseEmailFinnishPlaintextIso885915OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -9401,7 +9407,7 @@ func TestParseEmailFinnishPlaintextIso885915OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_finnish_plaintext_iso-8859-15_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9465,7 +9471,7 @@ func TestParseEmailFinnishPlaintextIso885915OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -9550,7 +9556,7 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_multipart_related_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9614,7 +9620,7 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -9741,7 +9747,7 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 	fp := "tests/test_finnish_multipart_related_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9805,7 +9811,7 @@ func TestParseEmailFinnishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -9932,7 +9938,7 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_multipart_related_iso-8859-15_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -9996,7 +10002,7 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -10122,7 +10128,7 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverQuotedprintable(t *testin
 	fp := "tests/test_finnish_multipart_related_iso-8859-15_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -10186,7 +10192,7 @@ func TestParseEmailFinnishMultipartRelatedIso885915OverQuotedprintable(t *testin
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -10312,7 +10318,7 @@ func TestParseEmailFinnishMultipartMixedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_multipart_mixed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -10376,7 +10382,7 @@ func TestParseEmailFinnishMultipartMixedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -10635,7 +10641,7 @@ func TestParseEmailFinnishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_finnish_multipart_mixed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -10699,7 +10705,7 @@ func TestParseEmailFinnishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -10958,7 +10964,7 @@ func TestParseEmailFinnishMultipartMixedIso885915OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_multipart_mixed_iso-8859-15_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -11022,7 +11028,7 @@ func TestParseEmailFinnishMultipartMixedIso885915OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -11279,7 +11285,7 @@ func TestParseEmailFinnishMultipartMixedIso885915OverQuotedprintable(t *testing.
 	fp := "tests/test_finnish_multipart_mixed_iso-8859-15_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -11343,7 +11349,7 @@ func TestParseEmailFinnishMultipartMixedIso885915OverQuotedprintable(t *testing.
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -11600,7 +11606,7 @@ func TestParseEmailFinnishMultipartSignedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_multipart_signed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -11664,7 +11670,7 @@ func TestParseEmailFinnishMultipartSignedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -11787,7 +11793,7 @@ func TestParseEmailFinnishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_finnish_multipart_signed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -11851,7 +11857,7 @@ func TestParseEmailFinnishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -11974,7 +11980,7 @@ func TestParseEmailFinnishMultipartSignedIso885915OverBase64(t *testing.T) {
 	fp := "tests/test_finnish_multipart_signed_iso-8859-15_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -12038,7 +12044,7 @@ func TestParseEmailFinnishMultipartSignedIso885915OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -12161,7 +12167,7 @@ func TestParseEmailFinnishMultipartSignedIso885915OverQuotedprintable(t *testing
 	fp := "tests/test_finnish_multipart_signed_iso-8859-15_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Lähettäjä",
 				Address: "alice.lahettaja@example.com",
@@ -12225,7 +12231,7 @@ func TestParseEmailFinnishMultipartSignedIso885915OverQuotedprintable(t *testing
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 4, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Lähettäjä",
@@ -12348,7 +12354,7 @@ func TestParseEmailIcelandicPlaintextUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_plaintext_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -12412,7 +12418,7 @@ func TestParseEmailIcelandicPlaintextUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -12494,7 +12500,7 @@ func TestParseEmailIcelandicPlaintextUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_icelandic_plaintext_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -12558,7 +12564,7 @@ func TestParseEmailIcelandicPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -12640,7 +12646,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_plaintext_iso-8859-1_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -12704,7 +12710,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -12786,7 +12792,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_icelandic_plaintext_iso-8859-1_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -12850,7 +12856,7 @@ func TestParseEmailIcelandicPlaintextIso88591OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -12932,7 +12938,7 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_multipart_related_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -12996,7 +13002,7 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -13114,7 +13120,7 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverQuotedprintable(t *testing.T
 	fp := "tests/test_icelandic_multipart_related_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -13178,7 +13184,7 @@ func TestParseEmailIcelandicMultipartRelatedUtf8OverQuotedprintable(t *testing.T
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -13296,7 +13302,7 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_multipart_related_iso-8859-1_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -13360,7 +13366,7 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -13477,7 +13483,7 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverQuotedprintable(t *testi
 	fp := "tests/test_icelandic_multipart_related_iso-8859-1_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -13541,7 +13547,7 @@ func TestParseEmailIcelandicMultipartRelatedIso88591OverQuotedprintable(t *testi
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -13658,7 +13664,7 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_multipart_mixed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -13722,7 +13728,7 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -13972,7 +13978,7 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverQuotedprintable(t *testing.T) 
 	fp := "tests/test_icelandic_multipart_mixed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -14036,7 +14042,7 @@ func TestParseEmailIcelandicMultipartMixedUtf8OverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -14286,7 +14292,7 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_multipart_mixed_iso-8859-1_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -14350,7 +14356,7 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -14598,7 +14604,7 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverQuotedprintable(t *testing
 	fp := "tests/test_icelandic_multipart_mixed_iso-8859-1_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -14662,7 +14668,7 @@ func TestParseEmailIcelandicMultipartMixedIso88591OverQuotedprintable(t *testing
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -14910,7 +14916,7 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_multipart_signed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -14974,7 +14980,7 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -15094,7 +15100,7 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T)
 	fp := "tests/test_icelandic_multipart_signed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -15158,7 +15164,7 @@ func TestParseEmailIcelandicMultipartSignedUtf8OverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -15278,7 +15284,7 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
 	fp := "tests/test_icelandic_multipart_signed_iso-8859-1_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -15342,7 +15348,7 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -15461,7 +15467,7 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testin
 	fp := "tests/test_icelandic_multipart_signed_iso-8859-1_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Alice Sendandidóttir",
 				Address: "alice.sendandidottir@example.com",
@@ -15525,7 +15531,7 @@ func TestParseEmailIcelandicMultipartSignedIso88591OverQuotedprintable(t *testin
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 7, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Alice Sendandidóttir",
@@ -15644,7 +15650,7 @@ func TestParseEmailJapanesePlaintextUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -15708,7 +15714,7 @@ func TestParseEmailJapanesePlaintextUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -15808,7 +15814,7 @@ func TestParseEmailJapanesePlaintextUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -15872,7 +15878,7 @@ func TestParseEmailJapanesePlaintextUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -15972,7 +15978,7 @@ func TestParseEmailJapanesePlaintextUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -16036,7 +16042,7 @@ func TestParseEmailJapanesePlaintextUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -16136,7 +16142,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOver7bit(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_iso-2022-jp_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -16200,7 +16206,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -16300,7 +16306,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_iso-2022-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -16364,7 +16370,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -16464,7 +16470,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_iso-2022-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -16528,7 +16534,7 @@ func TestParseEmailJapanesePlaintextIso2022jpOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -16628,7 +16634,7 @@ func TestParseEmailJapanesePlaintextEucjpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_euc-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -16692,7 +16698,7 @@ func TestParseEmailJapanesePlaintextEucjpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -16792,7 +16798,7 @@ func TestParseEmailJapanesePlaintextEucjpOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_japanese_plaintext_euc-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -16856,7 +16862,7 @@ func TestParseEmailJapanesePlaintextEucjpOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -16956,7 +16962,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_japanese_multipart_related_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -17020,7 +17026,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -17192,7 +17198,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_related_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -17256,7 +17262,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -17428,7 +17434,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverQuotedprintable(t *testing.T)
 	fp := "tests/test_japanese_multipart_related_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -17492,7 +17498,7 @@ func TestParseEmailJapaneseMultipartRelatedUtf8OverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -17664,7 +17670,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOver7bit(t *testing.T) {
 	fp := "tests/test_japanese_multipart_related_iso-2022-jp_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -17728,7 +17734,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -17900,7 +17906,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_related_iso-2022-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -17964,7 +17970,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -18136,7 +18142,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverQuotedprintable(t *testi
 	fp := "tests/test_japanese_multipart_related_iso-2022-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -18200,7 +18206,7 @@ func TestParseEmailJapaneseMultipartRelatedIso2022jpOverQuotedprintable(t *testi
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -18372,7 +18378,7 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_related_euc-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -18436,7 +18442,7 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -18608,7 +18614,7 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverQuotedprintable(t *testing.T
 	fp := "tests/test_japanese_multipart_related_euc-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -18672,7 +18678,7 @@ func TestParseEmailJapaneseMultipartRelatedEucjpOverQuotedprintable(t *testing.T
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -18844,7 +18850,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_japanese_multipart_mixed_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -18908,7 +18914,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -19212,7 +19218,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_mixed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -19276,7 +19282,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -19580,7 +19586,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_japanese_multipart_mixed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -19644,7 +19650,7 @@ func TestParseEmailJapaneseMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -19948,7 +19954,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOver7bit(t *testing.T) {
 	fp := "tests/test_japanese_multipart_mixed_iso-2022-jp_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -20012,7 +20018,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -20316,7 +20322,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_mixed_iso-2022-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -20380,7 +20386,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -20684,7 +20690,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverQuotedprintable(t *testing
 	fp := "tests/test_japanese_multipart_mixed_iso-2022-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -20748,7 +20754,7 @@ func TestParseEmailJapaneseMultipartMixedIso2022jpOverQuotedprintable(t *testing
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -21052,7 +21058,7 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_mixed_euc-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -21116,7 +21122,7 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -21420,7 +21426,7 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverQuotedprintable(t *testing.T) 
 	fp := "tests/test_japanese_multipart_mixed_euc-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -21484,7 +21490,7 @@ func TestParseEmailJapaneseMultipartMixedEucjpOverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -21788,7 +21794,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8Over7bit(t *testing.T) {
 	fp := "tests/test_japanese_multipart_signed_utf-8_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -21852,7 +21858,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8Over7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -21990,7 +21996,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_signed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -22054,7 +22060,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -22192,7 +22198,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverQuotedprintable(t *testing.T) 
 	fp := "tests/test_japanese_multipart_signed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -22256,7 +22262,7 @@ func TestParseEmailJapaneseMultipartSignedUtf8OverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -22394,7 +22400,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOver7bit(t *testing.T) {
 	fp := "tests/test_japanese_multipart_signed_iso-2022-jp_over_7bit.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -22458,7 +22464,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOver7bit(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -22600,7 +22606,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_signed_iso-2022-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -22664,7 +22670,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -22806,7 +22812,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverQuotedprintable(t *testin
 	fp := "tests/test_japanese_multipart_signed_iso-2022-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -22870,7 +22876,7 @@ func TestParseEmailJapaneseMultipartSignedIso2022jpOverQuotedprintable(t *testin
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -23012,7 +23018,7 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverBase64(t *testing.T) {
 	fp := "tests/test_japanese_multipart_signed_euc-jp_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -23076,7 +23082,7 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -23214,7 +23220,7 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverQuotedprintable(t *testing.T)
 	fp := "tests/test_japanese_multipart_signed_euc-jp_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "郵便アリス",
 				Address: "alice.yuubin@example.com",
@@ -23278,7 +23284,7 @@ func TestParseEmailJapaneseMultipartSignedEucjpOverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "郵便アリス",
@@ -23416,7 +23422,7 @@ func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_korean_plaintext_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -23480,7 +23486,7 @@ func TestParseEmailKoreanPlaintextUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -23560,7 +23566,7 @@ func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_plaintext_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -23624,7 +23630,7 @@ func TestParseEmailKoreanPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -23704,7 +23710,7 @@ func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
 	fp := "tests/test_korean_plaintext_euc-kr_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -23768,7 +23774,7 @@ func TestParseEmailKoreanPlaintextEuckrOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -23848,7 +23854,7 @@ func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_plaintext_euc-kr_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -23912,7 +23918,7 @@ func TestParseEmailKoreanPlaintextEuckrOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -23992,7 +23998,7 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_korean_multipart_related_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -24056,7 +24062,7 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -24168,7 +24174,7 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_multipart_related_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -24232,7 +24238,7 @@ func TestParseEmailKoreanMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -24344,7 +24350,7 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
 	fp := "tests/test_korean_multipart_related_euc-kr_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -24408,7 +24414,7 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -24520,7 +24526,7 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) 
 	fp := "tests/test_korean_multipart_related_euc-kr_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -24584,7 +24590,7 @@ func TestParseEmailKoreanMultipartRelatedEuckrOverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -24696,7 +24702,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_korean_multipart_mixed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -24760,7 +24766,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -25004,7 +25010,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_multipart_mixed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -25068,7 +25074,7 @@ func TestParseEmailKoreanMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -25312,7 +25318,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 	fp := "tests/test_korean_multipart_mixed_euc-kr_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -25376,7 +25382,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -25620,7 +25626,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_multipart_mixed_euc-kr_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -25684,7 +25690,7 @@ func TestParseEmailKoreanMultipartMixedEuckrOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -25928,7 +25934,7 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_korean_multipart_signed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -25992,7 +25998,7 @@ func TestParseEmailKoreanMultipartSignedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -26110,7 +26116,7 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_multipart_signed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -26174,7 +26180,7 @@ func TestParseEmailKoreanMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -26292,7 +26298,7 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 	fp := "tests/test_korean_multipart_signed_euc-kr_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -26356,7 +26362,7 @@ func TestParseEmailKoreanMultipartSignedEuckrOverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -26472,7 +26478,7 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 	fp := "tests/test_korean_multipart_signed_euc-kr_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "앨리스 보내는사람",
 				Address: "alice.bonaeneunsalam@example.com",
@@ -26536,7 +26542,7 @@ func TestParseEmailKoreanMultipartSignedEuckrOverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 3, 31, 22, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "앨리스 보내는사람",
@@ -26652,7 +26658,7 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_polish_plaintext_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -26716,7 +26722,7 @@ func TestParseEmailPolishPlaintextUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -26803,7 +26809,7 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_polish_plaintext_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -26867,7 +26873,7 @@ func TestParseEmailPolishPlaintextUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -26954,7 +26960,7 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 	fp := "tests/test_polish_plaintext_iso-8859-2_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -27018,7 +27024,7 @@ func TestParseEmailPolishPlaintextIso88592OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -27105,7 +27111,7 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_polish_plaintext_iso-8859-2_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -27169,7 +27175,7 @@ func TestParseEmailPolishPlaintextIso88592OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -27256,7 +27262,7 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_polish_multipart_related_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -27320,7 +27326,7 @@ func TestParseEmailPolishMultipartRelatedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -27453,7 +27459,7 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_polish_multipart_related_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -27517,7 +27523,7 @@ func TestParseEmailPolishMultipartRelatedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -27650,7 +27656,7 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 	fp := "tests/test_polish_multipart_related_iso-8859-2_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -27714,7 +27720,7 @@ func TestParseEmailPolishMultipartRelatedIso88592OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -27846,7 +27852,7 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 	fp := "tests/test_polish_multipart_related_iso-8859-2_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -27910,7 +27916,7 @@ func TestParseEmailPolishMultipartRelatedIso88592OverQuotedprintable(t *testing.
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -28042,7 +28048,7 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_polish_multipart_mixed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -28106,7 +28112,7 @@ func TestParseEmailPolishMultipartMixedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -28371,7 +28377,7 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_polish_multipart_mixed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -28435,7 +28441,7 @@ func TestParseEmailPolishMultipartMixedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -28700,7 +28706,7 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 	fp := "tests/test_polish_multipart_mixed_iso-8859-2_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -28764,7 +28770,7 @@ func TestParseEmailPolishMultipartMixedIso88592OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -29027,7 +29033,7 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 	fp := "tests/test_polish_multipart_mixed_iso-8859-2_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -29091,7 +29097,7 @@ func TestParseEmailPolishMultipartMixedIso88592OverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -29354,7 +29360,7 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 	fp := "tests/test_polish_multipart_signed_utf-8_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -29418,7 +29424,7 @@ func TestParseEmailPolishMultipartSignedUtf8OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -29543,7 +29549,7 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_polish_multipart_signed_utf-8_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -29607,7 +29613,7 @@ func TestParseEmailPolishMultipartSignedUtf8OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -29732,7 +29738,7 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 	fp := "tests/test_polish_multipart_signed_iso-8859-2_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -29796,7 +29802,7 @@ func TestParseEmailPolishMultipartSignedIso88592OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -29921,7 +29927,7 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 	fp := "tests/test_polish_multipart_signed_iso-8859-2_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "Nadająca, Alicja",
 				Address: "alicja.nadajaca@example.com",
@@ -29985,7 +29991,7 @@ func TestParseEmailPolishMultipartSignedIso88592OverQuotedprintable(t *testing.T
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 5, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "Nadająca, Alicja",
@@ -30110,7 +30116,7 @@ func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
 	fp := "tests/test_thai_plaintext_iso-8859-11_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -30174,7 +30180,7 @@ func TestParseEmailThaiPlaintextIso885911OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -30252,7 +30258,7 @@ func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_thai_plaintext_iso-8859-11_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -30316,7 +30322,7 @@ func TestParseEmailThaiPlaintextIso885911OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -30394,7 +30400,7 @@ func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
 	fp := "tests/test_thai_plaintext_windows-874_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -30458,7 +30464,7 @@ func TestParseEmailThaiPlaintextWindows874OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -30536,7 +30542,7 @@ func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_thai_plaintext_windows-874_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -30600,7 +30606,7 @@ func TestParseEmailThaiPlaintextWindows874OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -30678,7 +30684,7 @@ func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
 	fp := "tests/test_thai_plaintext_tis-620_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -30742,7 +30748,7 @@ func TestParseEmailThaiPlaintextTis620OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -30820,7 +30826,7 @@ func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_thai_plaintext_tis-620_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -30884,7 +30890,7 @@ func TestParseEmailThaiPlaintextTis620OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -30962,7 +30968,7 @@ func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_related_iso-8859-11_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -31026,7 +31032,7 @@ func TestParseEmailThaiMultipartRelatedIso885911OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -31140,7 +31146,7 @@ func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T
 	fp := "tests/test_thai_multipart_related_iso-8859-11_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -31204,7 +31210,7 @@ func TestParseEmailThaiMultipartRelatedIso885911OverQuotedprintable(t *testing.T
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -31318,7 +31324,7 @@ func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_related_windows-874_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -31382,7 +31388,7 @@ func TestParseEmailThaiMultipartRelatedWindows874OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -31496,7 +31502,7 @@ func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.
 	fp := "tests/test_thai_multipart_related_windows-874_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -31560,7 +31566,7 @@ func TestParseEmailThaiMultipartRelatedWindows874OverQuotedprintable(t *testing.
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -31674,7 +31680,7 @@ func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_related_tis-620_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -31738,7 +31744,7 @@ func TestParseEmailThaiMultipartRelatedTis620OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -31852,7 +31858,7 @@ func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_thai_multipart_related_tis-620_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -31916,7 +31922,7 @@ func TestParseEmailThaiMultipartRelatedTis620OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -32030,7 +32036,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_mixed_iso-8859-11_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -32094,7 +32100,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -32340,7 +32346,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 	fp := "tests/test_thai_multipart_mixed_iso-8859-11_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -32404,7 +32410,7 @@ func TestParseEmailThaiMultipartMixedIso885911OverQuotedprintable(t *testing.T) 
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -32650,7 +32656,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_mixed_windows-874_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -32714,7 +32720,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -32960,7 +32966,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 	fp := "tests/test_thai_multipart_mixed_windows-874_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -33024,7 +33030,7 @@ func TestParseEmailThaiMultipartMixedWindows874OverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -33270,7 +33276,7 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_mixed_tis-620_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -33334,7 +33340,7 @@ func TestParseEmailThaiMultipartMixedTis620OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -33580,7 +33586,7 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_thai_multipart_mixed_tis-620_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -33644,7 +33650,7 @@ func TestParseEmailThaiMultipartMixedTis620OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -33890,7 +33896,7 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_signed_iso-8859-11_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -33954,7 +33960,7 @@ func TestParseEmailThaiMultipartSignedIso885911OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -34073,7 +34079,7 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 	fp := "tests/test_thai_multipart_signed_iso-8859-11_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -34137,7 +34143,7 @@ func TestParseEmailThaiMultipartSignedIso885911OverQuotedprintable(t *testing.T)
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -34256,7 +34262,7 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_signed_windows-874_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -34320,7 +34326,7 @@ func TestParseEmailThaiMultipartSignedWindows874OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -34439,7 +34445,7 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 	fp := "tests/test_thai_multipart_signed_windows-874_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -34503,7 +34509,7 @@ func TestParseEmailThaiMultipartSignedWindows874OverQuotedprintable(t *testing.T
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -34622,7 +34628,7 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 	fp := "tests/test_thai_multipart_signed_tis-620_over_base64.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -34686,7 +34692,7 @@ func TestParseEmailThaiMultipartSignedTis620OverBase64(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",
@@ -34805,7 +34811,7 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 	fp := "tests/test_thai_multipart_signed_tis-620_over_quoted-printable.txt"
 	expectedEmail := &email.Email{
 		Headers: email.Headers{
-			Date: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			Date: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			Sender: &mail.Address{
 				Name:    "อลิซ ผู้ส่งจดหมาย",
 				Address: "alis.phusngcdhmay@example.com",
@@ -34869,7 +34875,7 @@ func TestParseEmailThaiMultipartSignedTis620OverQuotedprintable(t *testing.T) {
 				"Keyword 1",
 				"Keyword 2",
 			},
-			ResentDate: time.Time(time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC)),
+			ResentDate: time.Date(2019, 4, 1, 0, 55, 0, 0, time.UTC),
 			ResentFrom: []*mail.Address{
 				&mail.Address{
 					Name:    "อลิซ ผู้ส่งจดหมาย",

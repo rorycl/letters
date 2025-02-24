@@ -20,15 +20,12 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"reflect"
 	"regexp"
 	"strings"
 	"text/template"
-	"time"
 
 	"github.com/rorycl/letters"
 	"github.com/rorycl/letters/email"
@@ -104,21 +101,7 @@ func parseEmail(fp string) (*email.Email, error) {
 // dump email
 func dumpEmail(t any) string {
 	// https://github.com/sanity-io/litter/issues/12#issuecomment-1144643251
-	timeType := reflect.TypeOf(time.Time{})
-	litter.Config.DumpFunc = func(v reflect.Value, w io.Writer) bool {
-		if v.Type() != timeType {
-			return false
-		}
-		t := v.Interface().(time.Time)
-		t = t.In(time.UTC)
-		t.Truncate(time.Second) // only need accuracy to second for email parsing
-		fmt.Fprintf(
-			w,
-			`(time.Date(%d, %d, %d, %d, %d, %d, %d, time.UTC))`,
-			t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
-		)
-		return true
-	}
+	litter.Config.FormatTime = true
 	litter.Config.FieldExclusions = regexp.MustCompile("^(Reader|Encoding)$")
 	litter.Config.DisablePointerReplacement = true
 	return litter.Sdump(t)
