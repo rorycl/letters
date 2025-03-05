@@ -10,33 +10,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/rorycl/letters"
 	"github.com/rorycl/letters/email"
-	"github.com/rorycl/letters/parser"
 )
-
-func testEmailHeadersFromFile(t *testing.T, fp string, expectedEmail *email.Email) {
-	rawEmail, err := os.Open(fp)
-	if err != nil {
-		t.Errorf("error while reading email from file: %s", err)
-		return
-	}
-
-	opt := parser.WithHeadersOnly()                   // headers only option
-	p := letters.NewParser(opt, parser.WithVerbose()) // chain options
-	parsedEmail, err := p.Parse(rawEmail)
-	got, want := parsedEmail, expectedEmail
-	if err != nil {
-		t.Errorf("error while parsing email headers: %s", err)
-		return
-	}
-	if diff := cmp.Diff(
-		want,
-		got,
-		cmpopts.IgnoreFields(email.File{}, "Reader"),
-		cmpopts.IgnoreFields(email.ContentInfo{}, "Encoding", "encDone"),
-	); diff != "" {
-		t.Errorf("emails (headers only) are not equal\n%s", diff)
-	}
-}
 
 func testEmailFromFile(t *testing.T, fp string, expectedEmail *email.Email) {
 	rawEmail, err := os.Open(fp)
