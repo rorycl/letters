@@ -25,7 +25,6 @@ func testEmailFromFile(t *testing.T, fp string, expectedEmail *email.Email) {
 		return
 	}
 	got, want := parsedEmail, expectedEmail
-	// if diff := cmp.Diff(want, got, cmpopts.IgnoreFields(email.File{}, "Reader")); diff != "" {
 	if diff := cmp.Diff(
 		want,
 		got,

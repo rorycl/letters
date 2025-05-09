@@ -19,7 +19,7 @@ import (
 // results for the consumer.
 //
 // Files that are successfully parsed are added to parser.email.Files.
-func (p *Parser) parseFile(r io.Reader, ci *email.ContentInfo) error {
+func (se *stagedEmail) parseFile(r io.Reader, ci *email.ContentInfo) error {
 
 	var err error
 	file := &email.File{
@@ -49,7 +49,7 @@ func (p *Parser) parseFile(r io.Reader, ci *email.ContentInfo) error {
 			tmpFileName = name
 		} else {
 			// Make up a unique name if none exists. Todo: Suffix ideally needed.
-			tmpFileName = fmt.Sprintf("attachment_%d_%s", len(p.email.Files), ci.Disposition)
+			tmpFileName = fmt.Sprintf("attachment_%d_%s", len(se.email.Files), ci.Disposition)
 		}
 	}
 	file.Name = filepath.Base(filepath.Clean(tmpFileName))
@@ -58,12 +58,12 @@ func (p *Parser) parseFile(r io.Reader, ci *email.ContentInfo) error {
 	// parser.fileFunc is a pluggable file reader with the signature
 	// func(*email.File) error.
 	// The fileFunc may be customised through parser.NewParser(...opts).
-	err = p.fileFunc(file)
+	err = se.parser.fileFunc(file)
 	if err != nil {
 		return fmt.Errorf("could not read attachment data: %w", err)
 	}
 
-	p.email.Files = append(p.email.Files, file)
+	se.email.Files = append(se.email.Files, file)
 	return nil
 
 }

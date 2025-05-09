@@ -6,7 +6,6 @@ package parser
 import (
 	"fmt"
 	"io"
-	"mime/multipart"
 	"net/mail"
 	"strings"
 	"time"
@@ -41,18 +40,20 @@ const (
 // WithHeadersOnly().
 type Opt func(p *Parser)
 
+// Parser is the structure holding the parser settings including
+// processType, skipContentTypes and address, file and date processing
+// funcs, all of which should be set by Opt closures if the defaults
+// aren't to be used.
+//
+// The default address and date parsers are provided by net/mail
+// (mail.ParseAddress and mail.ParseAddressList, mail.ParseDate) while
+// the default attachment func is to simply ready each attachment into
+// the slice of email.File.Data.
 type Parser struct {
 	// what parts of the email to process (default all)
 	processType typeOfProcessing
 	// skipContentTypes is a list of content types to skip
 	skipContentTypes []string
-
-	// email to be returned, for incremental processing
-	email *email.Email
-
-	// msg is the net/mail.Message used for deriving parts to build
-	// the output email.
-	msg *mail.Message
 
 	// funcs that can be overridden by the user; defaults are set
 	// attached by NewParser.
@@ -66,9 +67,6 @@ type Parser struct {
 	// fileFunc : a function for processing inline and attached files
 	fileFunc func(*email.File) error
 
-	// the main email content info
-	contentInfo *email.ContentInfo
-
 	// debugging, for future use
 	verbose bool
 }
@@ -77,11 +75,8 @@ type Parser struct {
 // using options returning an Opt.
 func NewParser(options ...Opt) *Parser {
 	p := &Parser{
-
 		// initialise main fields
 		processType: wholeEmail,
-		email:       &email.Email{},
-		msg:         &mail.Message{},
 
 		// initialise overrideable funcs
 		// use net/mail.ParseAddress and ParseAddressList  as default
@@ -112,41 +107,44 @@ func NewParser(options ...Opt) *Parser {
 // Parse is the main entry point of letters.
 func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 	var err error
-	p.msg, err = mail.ReadMessage(r)
+	se := newStagedEmail(p)
+
+	// read the message into a *mail.Message
+	se.msg, err = mail.ReadMessage(r)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read message: %w", err)
 	}
 
 	// extract content information
-	p.contentInfo, err = email.ExtractContentInfo(p.msg.Header, nil)
+	se.contentInfo, err = email.ExtractContentInfo(se.msg.Header, nil)
 	if err != nil {
 		return nil, fmt.Errorf("cannot extract content: %w", err)
 	}
 
 	// parse headers
-	err = p.parseHeaders()
+	err = se.parseHeaders()
 	if err != nil {
 		return nil, fmt.Errorf("cannot parse headers: %w", err)
 	}
 	if p.processType == headersOnly {
-		return p.email, nil
+		return se.email, nil
 	}
 
-	switch ct := p.contentInfo.Type; { // true switch
+	switch ct := se.contentInfo.Type; { // true switch
 
 	case ct == "text/plain", ct == "text/enriched", ct == "text/html":
 		// parse body
-		err = p.parseBody()
+		err = se.parseBody()
 		if err != nil {
 			return nil, err
 		}
 
 	case strings.HasPrefix(ct, "multipart/"):
 		// parse parts
-		err = p.parsePart(
-			p.msg.Body,
-			p.contentInfo,
-			p.contentInfo.TypeParams["boundary"],
+		err = se.parsePart(
+			se.msg.Body,
+			se.contentInfo,
+			se.contentInfo.TypeParams["boundary"],
 		)
 		if err != nil {
 			return nil, err
@@ -154,136 +152,10 @@ func (p *Parser) Parse(r io.Reader) (*email.Email, error) {
 
 	default:
 		// parse attachment
-		err = p.parseFile(p.msg.Body, p.contentInfo)
+		err = se.parseFile(se.msg.Body, se.contentInfo)
 		if err != nil {
 			return nil, err
 		}
 	}
-	return p.email, err
-}
-
-// parsePart parses the parts of a multipart message and may be called
-// recursively.
-func (p *Parser) parsePart(msg io.Reader, parentCI *email.ContentInfo, boundary string) error {
-
-	multipartReader := multipart.NewReader(msg, boundary)
-	if multipartReader == nil {
-		return nil
-	}
-
-	for {
-		part, err := multipartReader.NextPart()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return fmt.Errorf("cannot read part: %w", err)
-		}
-
-		// extract content information
-		contentInfo, err := email.ExtractContentInfo(part.Header, p.contentInfo)
-		if err != nil {
-			return fmt.Errorf("content extraction error: %w", err)
-		}
-
-		// skip part if the content type is in p.skipContentTypes
-		if p.inSkipContentTypes(contentInfo.Type) {
-			continue
-		}
-
-		// commence extraction of data with attached file
-		if contentInfo.Disposition == "attachment" {
-			err = p.parseFile(
-				part,
-				contentInfo,
-			)
-			if err != nil {
-				return fmt.Errorf("cannot parse attached file: %w", err)
-			}
-			continue
-		}
-
-		// process text plain content
-		if contentInfo.Type == "text/plain" {
-			partTextBody, err := p.parseText(part, contentInfo)
-			if err != nil {
-				return fmt.Errorf("cannot parse plain text: %w", err)
-			}
-			if len(p.email.Text) > 0 { // add separator
-				p.email.Text += "\n\n"
-			}
-			p.email.Text += partTextBody
-			continue
-		}
-
-		// process text enriched content
-		if contentInfo.Type == "text/enriched" {
-			partEnrichedText, err := p.parseText(part, contentInfo)
-			if err != nil {
-				return fmt.Errorf("cannot parse enriched text: %w", err)
-			}
-			p.email.EnrichedText += partEnrichedText
-			continue
-		}
-
-		// process html content
-		if contentInfo.Type == "text/html" {
-			partHtmlBody, err := p.parseText(part, contentInfo)
-			if err != nil {
-				return fmt.Errorf("cannot parse html text: %w", err)
-			}
-			p.email.HTML += partHtmlBody
-			continue
-		}
-
-		// recursive call to parsePart
-		if strings.HasPrefix(contentInfo.Type, "multipart") {
-			err := p.parsePart(part, contentInfo, contentInfo.TypeParams["boundary"])
-			if err != nil {
-				return fmt.Errorf("cannot parse nested part: %w", err)
-			}
-			continue
-		}
-
-		// process inline file
-		if contentInfo.IsInlineFile(contentInfo) {
-			if p.processType != wholeEmail {
-				continue
-			}
-			err = p.parseFile(part, contentInfo)
-			if err != nil {
-				return fmt.Errorf("cannot parse inline file: %w", err)
-			}
-			continue
-		}
-
-		// process attached file
-		if contentInfo.IsAttachedFile(contentInfo) {
-			if p.processType != wholeEmail {
-				continue
-			}
-			err := p.parseFile(part, contentInfo)
-			if err != nil {
-				return fmt.Errorf("cannot parse attached file: %w", err)
-			}
-			continue
-		}
-
-		// types to ignore
-		// Todo/fixme
-		// This section needs to be expanded or, alternatively and more
-		// sensibly, expanded and moved to contentInfo
-
-		// unhandled types fixme
-		switch contentInfo.Type {
-		case "text/calendar":
-			fmt.Println("skipping text/calendar content-type")
-			continue
-		}
-
-		// fallthrough error
-		return &UnknownContentTypeError{contentType: contentInfo.Type}
-	}
-
-	return nil
+	return se.email, err
 }

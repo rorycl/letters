@@ -77,17 +77,18 @@ VGV4dC9wbGFpbiBjb250ZW50IGFzIGFuIGF0dGFjaGVkIC50eHQgZmlsZS4=`,
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
 			p := NewParser()
-			err := p.parseFile(
+			se := newStagedEmail(p)
+			err := se.parseFile(
 				strings.NewReader(tt.content),
 				tt.contentInfo,
 			)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if got, want := len(p.email.Files), 1; got != want {
+			if got, want := len(se.email.Files), 1; got != want {
 				t.Errorf("got %d want %d files", got, want)
 			}
-			filer := p.email.Files[0]
+			filer := se.email.Files[0]
 			if got, want := filer.Name, tt.fileName; got != want {
 				t.Errorf("got name %s want %s ", got, want)
 			}

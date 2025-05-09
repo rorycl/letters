@@ -1,6 +1,8 @@
 # Letters
 Email parsing for go.
 
+v0.1.3 : 01 May 2025 : allow Parser to be shared.
+
 This is a fork of [mnako/letters](https://github.com/mnako/letters), a
 minimalistic Golang library for parsing plain and MIME emails. Thanks to
 @mnako and contributors, letters has great support for languages other
@@ -15,6 +17,12 @@ funcs, for example for efficient inline and attachment file processing.
 Future plans include making parsing errors, such as for invalid email
 addresses, optionally non-fatal.
 
+See [mailboxoperator](https://github.com/rorycl/mailboxoperator) for a
+convenient way of iterating over emails in mailbox or maildir format. An
+example client for mailboxoperator is
+[mailfinder](https://github.com/rorycl/mailfinder), which also uses this
+module.
+
 ## Quickstart
 
 Install
@@ -26,6 +34,7 @@ go get github.com/rorycl/letters@latest
 Parse an email:
 
 ```go
+reader := someEmailIOReaderProvider() // see mailboxoperator
 p := letters.NewParser()
 parsedEmail, err := p.Parse(reader)
 

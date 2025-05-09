@@ -85,25 +85,25 @@ Pack my box with five dozen liquor jugs.
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
 			p := NewParser()
-			p.contentInfo = tt.ci
-			p.contentInfo.Charset = tt.charsetForEncoding
-			p.contentInfo.ExtractEncoding()
-			p.msg.Body = bytes.NewReader(tt.bodyInfo)
-			err := p.parseBody()
+			se := newStagedEmail(p)
+			se.contentInfo = tt.ci
+			se.contentInfo.Charset = tt.charsetForEncoding
+			se.contentInfo.ExtractEncoding()
+			se.msg.Body = bytes.NewReader(tt.bodyInfo)
+			err := se.parseBody()
 			if err != nil {
 				t.Fatal(err)
 			}
-			if got, want := len(p.email.Text), tt.textLen; got != want {
+			if got, want := len(se.email.Text), tt.textLen; got != want {
 				t.Errorf("text len got %d want %d", got, want)
 			}
-			if got, want := len(p.email.EnrichedText), tt.enrichedLen; got != want {
+			if got, want := len(se.email.EnrichedText), tt.enrichedLen; got != want {
 				t.Errorf("enriched len got %d want %d", got, want)
 			}
-			if got, want := len(p.email.HTML), tt.htmlLen; got != want {
+			if got, want := len(se.email.HTML), tt.htmlLen; got != want {
 				t.Errorf("html len got %d want %d", got, want)
 			}
 
 		})
 	}
-
 }

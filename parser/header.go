@@ -61,7 +61,7 @@ const idTrimCutset string = "<> \n"
 
 // parseAddresses parses a list of email addresses. Note that
 // net/mail.Header[param] gets a list of addresses rather than slice.
-func (p *Parser) parseAddresses(s string) ([]*mail.Address, error) {
+func (se *stagedEmail) parseAddresses(s string) ([]*mail.Address, error) {
 	if s == "" {
 		return nil, errorEmptyAddress
 	}
@@ -71,12 +71,12 @@ func (p *Parser) parseAddresses(s string) ([]*mail.Address, error) {
 		return addresses, fmt.Errorf("cannot decode address %q: %w", s, err)
 	}
 	// plug point for custom address parsing
-	return p.addressesFunc(decodedHeader)
+	return se.parser.addressesFunc(decodedHeader)
 }
 
 // parseAddress parses a single *mail.Address from a string using
 // parseAddresses
-func (p *Parser) parseAddress(s string) (*mail.Address, error) {
+func (se *stagedEmail) parseAddress(s string) (*mail.Address, error) {
 	if s == "" {
 		return nil, errorEmptyAddress
 	}
@@ -85,24 +85,24 @@ func (p *Parser) parseAddress(s string) (*mail.Address, error) {
 		return nil, fmt.Errorf("cannot decode address %q: %w", s, err)
 	}
 	// plug point for custom address parsing
-	return p.addressFunc(decodedHeader)
+	return se.parser.addressFunc(decodedHeader)
 }
 
-// parseHeaders parses the headers in the net/mail.Header at p.msg into
-// p.email.Headers field values.
-func (p *Parser) parseHeaders() error {
+// parseHeaders parses the headers in the net/mail.Header at se.msg into
+// se.email.Headers field values.
+func (se *stagedEmail) parseHeaders() error {
 
 	// get is a shortcut to net/mail.Header.Get, which returns the first
 	// value (if any) for a header field. Note that all lists of email
 	// addresses are returned as single string, so should be retrieved
 	// using "Get" rather than by map lookup.
 	get := func(field string) string {
-		return p.msg.Header.Get(field)
+		return se.msg.Header.Get(field)
 	}
 
 	// getAll is shortcut to get the net/mail.Header []string elements
 	getAll := func(field string) []string {
-		return p.msg.Header[field]
+		return se.msg.Header[field]
 	}
 
 	// getID returns a cleaned message id
@@ -126,7 +126,7 @@ func (p *Parser) parseHeaders() error {
 			return time.Time{}, errorEmptyDate
 		}
 		// plug point for custom address parsing
-		return p.dateFunc(s)
+		return se.parser.dateFunc(s)
 	}
 
 	// getDecodedString decodes and trims a string header
@@ -138,8 +138,8 @@ func (p *Parser) parseHeaders() error {
 	getCSV := func(s string) []string {
 		o := []string{}
 		parts := strings.Split(s, ",")
-		for _, p := range parts {
-			pp := strings.TrimSpace(p)
+		for _, pa := range parts {
+			pp := strings.TrimSpace(pa)
 			if len(pp) > 0 {
 				o = append(o, pp)
 			}
@@ -148,13 +148,13 @@ func (p *Parser) parseHeaders() error {
 	}
 
 	// alias headers for easy reference
-	h := &p.email.Headers
+	h := &se.email.Headers
 
-	// set contentInfo from parser
-	h.ContentInfo = p.contentInfo
+	// set contentInfo from stagedEmail
+	h.ContentInfo = se.contentInfo
 
 	h.ExtraHeaders = map[string][]string{}
-	for key, value := range p.msg.Header {
+	for key, value := range se.msg.Header {
 		if isExplicitHeader(key) {
 			continue
 		}
@@ -166,68 +166,68 @@ func (p *Parser) parseHeaders() error {
 	}
 
 	var err error
-	if h.Sender, err = p.parseAddress(get("Sender")); err != nil {
+	if h.Sender, err = se.parseAddress(get("Sender")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("cannot parse Sender header: %w", err)
 		}
 	}
 
 	// Get email address lists via get. See get function comments.
-	if h.From, err = p.parseAddresses(get("From")); err != nil {
+	if h.From, err = se.parseAddresses(get("From")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("From header: (%s) %w", get("From"), err)
 		}
 	}
 
-	if h.ReplyTo, err = p.parseAddresses(get("Reply-To")); err != nil {
+	if h.ReplyTo, err = se.parseAddresses(get("Reply-To")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Reply-To header: (%s) %w", get("Reply-To"), err)
 		}
 	}
 
-	if h.To, err = p.parseAddresses(get("To")); err != nil {
+	if h.To, err = se.parseAddresses(get("To")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("To header: (%s) %w", get("To"), err)
 		}
 	}
 
-	if h.Cc, err = p.parseAddresses(get("Cc")); err != nil {
+	if h.Cc, err = se.parseAddresses(get("Cc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Cc header: (%s) %w", get("Cc"), err)
 		}
 	}
 
-	if h.Bcc, err = p.parseAddresses(get("Bcc")); err != nil {
+	if h.Bcc, err = se.parseAddresses(get("Bcc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Bcc header: (%s) %w", get("Bcc"), err)
 		}
 	}
 
-	if h.ResentFrom, err = p.parseAddresses(get("Resent-From")); err != nil {
+	if h.ResentFrom, err = se.parseAddresses(get("Resent-From")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Resent-From header: (%s) %w", get("Resent-From"), err)
 		}
 	}
 
-	if h.ResentSender, err = p.parseAddress(get("Resent-Sender")); err != nil {
+	if h.ResentSender, err = se.parseAddress(get("Resent-Sender")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Resent-Sender header: (%s) %w", get("Resent-Sender"), err)
 		}
 	}
 
-	if h.ResentTo, err = p.parseAddresses(get("Resent-To")); err != nil {
+	if h.ResentTo, err = se.parseAddresses(get("Resent-To")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Resent-To header: (%s) %w", get("Resent-To"), err)
 		}
 	}
 
-	if h.ResentCc, err = p.parseAddresses(get("Resent-Cc")); err != nil {
+	if h.ResentCc, err = se.parseAddresses(get("Resent-Cc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Resent-Cc header: (%s) %w", get("Resent-Cc"), err)
 		}
 	}
 
-	if h.ResentBcc, err = p.parseAddresses(get("Resent-Bcc")); err != nil {
+	if h.ResentBcc, err = se.parseAddresses(get("Resent-Bcc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
 			return fmt.Errorf("Resent-Bcc header: (%s) %w", get("Resent-Bcc"), err)
 		}

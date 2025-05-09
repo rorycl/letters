@@ -33,6 +33,7 @@ func TestIsExplicitHeader(t *testing.T) {
 
 func TestParseAddressSingle(t *testing.T) {
 	p := NewParser()
+	se := newStagedEmail(p)
 	tests := []struct {
 		ok            bool
 		stringAddress string
@@ -47,7 +48,7 @@ func TestParseAddressSingle(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
-			addr, err := p.parseAddress(tt.stringAddress)
+			addr, err := se.parseAddress(tt.stringAddress)
 			if err != nil {
 				if tt.ok {
 					t.Fatal(err)
@@ -68,6 +69,7 @@ func TestParseAddressSingle(t *testing.T) {
 
 func TestParseAddresses(t *testing.T) {
 	p := NewParser()
+	se := newStagedEmail(p)
 	tests := []struct {
 		stringAddress string
 		name          []string
@@ -86,7 +88,7 @@ func TestParseAddresses(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
-			addr, err := p.parseAddresses(tt.stringAddress)
+			addr, err := se.parseAddresses(tt.stringAddress)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -107,11 +109,13 @@ func TestParseAddresses(t *testing.T) {
 
 func TestParseAddressCustomFunc(t *testing.T) {
 	p := NewParser()
+	se := newStagedEmail(p)
 	b, a := "Bart Simpson", "<bart@example.com>"
+	// or se.parser.addressFunc
 	p.addressFunc = func(s string) (*mail.Address, error) {
 		return &mail.Address{Name: b, Address: a}, nil
 	}
-	addr, err := p.parseAddress("Ronny Burke <ronnie@example.com>")
+	addr, err := se.parseAddress("Ronny Burke <ronnie@example.com>")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -125,17 +129,19 @@ func TestParseAddressCustomFunc(t *testing.T) {
 
 func TestParseAddressesCustomFunc(t *testing.T) {
 	p := NewParser()
+	se := newStagedEmail(p)
 	addresses := [][]string{
 		[]string{"Bart Simpson", "<bart@example.com>"},
 		[]string{"Darth Vader", "<darth@example.com>"},
 	}
+	// or se.parser.addressesFunc
 	p.addressesFunc = func(stringList string) ([]*mail.Address, error) {
 		return []*mail.Address{
 			&mail.Address{Name: addresses[0][0], Address: addresses[0][1]},
 			&mail.Address{Name: addresses[1][0], Address: addresses[1][1]},
 		}, nil
 	}
-	results, err := p.parseAddresses("Ronny Burke <ronnie@example.com>, A. S. Byatt <ab@oxon.ac.uk")
+	results, err := se.parseAddresses("Ronny Burke <ronnie@example.com>, A. S. Byatt <ab@oxon.ac.uk")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -155,6 +161,7 @@ func TestParseDateCustomFunc(t *testing.T) {
 	p.dateFunc = func(string) (time.Time, error) {
 		return time.Time{}, nil
 	}
+	// or se.parser.dateFunc
 	ti, err := p.dateFunc("whatever")
 	if err != nil {
 		t.Fatal(err)
@@ -212,12 +219,13 @@ Received: from [10.1.1.1] (helo=[192.168.0.1])
 `
 	var err error
 	p := NewParser()
-	p.msg, err = mail.ReadMessage(strings.NewReader(rawEmail))
+	se := newStagedEmail(p)
+	se.msg, err = mail.ReadMessage(strings.NewReader(rawEmail))
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = p.parseHeaders()
+	err = se.parseHeaders()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -291,7 +299,7 @@ Received: from [10.1.1.1] (helo=[192.168.0.1])
 		},
 	}
 
-	got, want := p.email.Headers, expectedEmail.Headers
+	got, want := se.email.Headers, expectedEmail.Headers
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("emails are not equal\n%s", diff)
 	}

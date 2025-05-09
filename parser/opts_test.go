@@ -97,8 +97,9 @@ func TestOptAddressCustomFunc(t *testing.T) {
 
 	opt := WithCustomAddressFunc(addressFunc)
 	p := NewParser(opt)
+	se := newStagedEmail(p)
 
-	addr, err := p.parseAddress("Ronny Burke <ronnie@example.com>")
+	addr, err := se.parseAddress("Ronny Burke <ronnie@example.com>")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -124,8 +125,9 @@ func TestOptAddressesCustomFunc(t *testing.T) {
 
 	opt := WithCustomAddressesFunc(addressesFunc)
 	p := NewParser(opt)
+	se := newStagedEmail(p)
 
-	results, err := p.parseAddresses("Ronny Burke <ronnie@example.com>, A. S. Byatt <ab@oxon.ac.uk")
+	results, err := se.parseAddresses("Ronny Burke <ronnie@example.com>, A. S. Byatt <ab@oxon.ac.uk")
 	if err != nil {
 		t.Fatal(err)
 	}

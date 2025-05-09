@@ -11,37 +11,38 @@ import (
 )
 
 // parseBody parses the body of an email
-func (p *Parser) parseBody() error {
+func (se *stagedEmail) parseBody() error {
 
 	var err error
-	switch p.contentInfo.Type {
+	switch se.contentInfo.Type {
 	case "text/plain":
-		p.email.Text, err = p.parseText(p.msg.Body, p.contentInfo)
+		se.email.Text, err = se.parseText(se.msg.Body, se.contentInfo)
 		if err != nil {
 			return fmt.Errorf("cannot parse plain text: %w", err)
 		}
 		return nil
 
 	case "text/enriched":
-		p.email.EnrichedText, err = p.parseText(p.msg.Body, p.contentInfo)
+		se.email.EnrichedText, err = se.parseText(se.msg.Body, se.contentInfo)
 		if err != nil {
 			return fmt.Errorf("cannot parse enriched text: %w", err)
 		}
 		return nil
 
 	case "text/html":
-		p.email.HTML, err = p.parseText(p.msg.Body, p.contentInfo)
+		se.email.HTML, err = se.parseText(se.msg.Body, se.contentInfo)
 		if err != nil {
 			return fmt.Errorf("cannot parse html text: %w", err)
 		}
 		return nil
 	}
-	return fmt.Errorf("parse body content type %q not known", p.contentInfo.Type)
+	return fmt.Errorf("parse body content type %q not known", se.contentInfo.Type)
 
 }
 
-// parseText parses the text content of an email body or mime part
-func (p *Parser) parseText(t io.Reader, ci *email.ContentInfo) (string, error) {
+// parseText parses the text content of an email body or mime part. Note
+// that mime parts can be nested inside other mime parts.
+func (se *stagedEmail) parseText(t io.Reader, ci *email.ContentInfo) (string, error) {
 	reader := decoders.DecodeContent(t, ci)
 	textBody, err := io.ReadAll(reader)
 	if err != nil {
