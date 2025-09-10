@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	errorEmptyAddress error = errors.New("Empty Address")
-	errorEmptyDate    error = errors.New("Empty Date")
+	errorEmptyAddress error = errors.New("empty address")
+	errorEmptyDate    error = errors.New("empty date")
 )
 
 // explicitHeaders are those headers stored in their own field in
@@ -175,82 +175,82 @@ func (se *stagedEmail) parseHeaders() error {
 	// Get email address lists via get. See get function comments.
 	if h.From, err = se.parseAddresses(get("From")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("From header: (%s) %w", get("From"), err)
+			return fmt.Errorf("from header: (%s) %w", get("From"), err)
 		}
 	}
 
 	if h.ReplyTo, err = se.parseAddresses(get("Reply-To")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Reply-To header: (%s) %w", get("Reply-To"), err)
+			return fmt.Errorf("reply-To header: (%s) %w", get("Reply-To"), err)
 		}
 	}
 
 	if h.To, err = se.parseAddresses(get("To")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("To header: (%s) %w", get("To"), err)
+			return fmt.Errorf("to header: (%s) %w", get("To"), err)
 		}
 	}
 
 	if h.Cc, err = se.parseAddresses(get("Cc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Cc header: (%s) %w", get("Cc"), err)
+			return fmt.Errorf("cc header: (%s) %w", get("Cc"), err)
 		}
 	}
 
 	if h.Bcc, err = se.parseAddresses(get("Bcc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Bcc header: (%s) %w", get("Bcc"), err)
+			return fmt.Errorf("bcc header: (%s) %w", get("Bcc"), err)
 		}
 	}
 
 	if h.ResentFrom, err = se.parseAddresses(get("Resent-From")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Resent-From header: (%s) %w", get("Resent-From"), err)
+			return fmt.Errorf("resent-from header: (%s) %w", get("Resent-From"), err)
 		}
 	}
 
 	if h.ResentSender, err = se.parseAddress(get("Resent-Sender")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Resent-Sender header: (%s) %w", get("Resent-Sender"), err)
+			return fmt.Errorf("resent-sender header: (%s) %w", get("Resent-Sender"), err)
 		}
 	}
 
 	if h.ResentTo, err = se.parseAddresses(get("Resent-To")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Resent-To header: (%s) %w", get("Resent-To"), err)
+			return fmt.Errorf("resent-to header: (%s) %w", get("Resent-To"), err)
 		}
 	}
 
 	if h.ResentCc, err = se.parseAddresses(get("Resent-Cc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Resent-Cc header: (%s) %w", get("Resent-Cc"), err)
+			return fmt.Errorf("resent-cc header: (%s) %w", get("Resent-Cc"), err)
 		}
 	}
 
 	if h.ResentBcc, err = se.parseAddresses(get("Resent-Bcc")); err != nil {
 		if !errors.Is(errorEmptyAddress, err) {
-			return fmt.Errorf("Resent-Bcc header: (%s) %w", get("Resent-Bcc"), err)
+			return fmt.Errorf("resent-bcc header: (%s) %w", get("Resent-Bcc"), err)
 		}
 	}
 
 	if h.Date, err = callDateFunc(get("Date")); err != nil {
 		if !errors.Is(errorEmptyDate, err) {
-			return fmt.Errorf("Date header: (%s) %w", get("Date"), err)
+			return fmt.Errorf("date header: (%s) %w", get("Date"), err)
 		}
 	}
 
 	if h.ResentDate, err = callDateFunc(get("Resent-Date")); err != nil {
 		if !errors.Is(errorEmptyDate, err) {
-			return fmt.Errorf("Resent-Date header: (%s) %w", get("Resent-Date"), err)
+			return fmt.Errorf("resent-date header: (%s) %w", get("Resent-Date"), err)
 		}
 	}
 
 	if h.Subject, err = getDecodedString(get("Subject")); err != nil {
-		return fmt.Errorf("Subject header: (%s) %w", get("Subject"), err)
+		return fmt.Errorf("subject header: (%s) %w", get("Subject"), err)
 	}
 
 	if h.Comments, err = getDecodedString(get("Comments")); err != nil {
-		return fmt.Errorf("Comments header: (%s) %w", get("Comments"), err)
+		return fmt.Errorf("comments header: (%s) %w", get("Comments"), err)
 	}
 
 	// consider parsing this into []Received

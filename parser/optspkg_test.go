@@ -27,7 +27,9 @@ func TestPkgNoAttachments(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer c.Close()
+	defer func() {
+		_ = c.Close()
+	}()
 	e, err := p.Parse(c)
 	if err != nil {
 		t.Fatal(err)
@@ -59,7 +61,9 @@ func TestPkgOptFileFilter(t *testing.T) {
 		if err != nil {
 			return fmt.Errorf("file creation error %w", err)
 		}
-		defer f.Close()
+		defer func() {
+			_ = f.Close()
+		}()
 		_, err = io.Copy(f, ef.Reader)
 		if err != nil {
 			return fmt.Errorf("file saving error %w", err)

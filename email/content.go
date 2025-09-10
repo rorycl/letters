@@ -260,7 +260,7 @@ func (c *ContentInfo) ExtractEncoding() {
 	}
 	c.Encoding, _ = charset.Lookup(c.Charset)
 	if c.Encoding == nil {
-		normalizedLabel := strings.Replace(c.Charset, "windows-", "cp", -1)
+		normalizedLabel := strings.ReplaceAll(c.Charset, "windows-", "cp")
 		c.Encoding, _ = charset.Lookup(normalizedLabel)
 	}
 	c.encDone = true

@@ -65,7 +65,9 @@ func TestOptSkipContentTypes(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			defer c.Close()
+			defer func() {
+				_ = c.Close()
+			}()
 			skipOpt := WithSkipContentTypes(tt.skips)
 			p := NewParser(skipOpt)
 			em, err := p.Parse(c)

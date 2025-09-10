@@ -175,7 +175,7 @@ func TestExtractCharset(t *testing.T) {
 				t.Errorf("charset got %s want %s", got, want)
 			}
 			c.ExtractEncoding()
-			if got, want := !(c.Encoding == nil), tt.hasEncoding; got != want {
+			if got, want := (c.Encoding != nil), tt.hasEncoding; got != want {
 				t.Errorf("encoding got %t want %t", got, want)
 			}
 		})

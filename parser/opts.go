@@ -112,7 +112,9 @@ func WithSaveFilesToDirectory(dir string) Opt {
 			if err != nil {
 				return fmt.Errorf("file creation error %w", err)
 			}
-			defer f.Close()
+			defer func() {
+				_ = f.Close()
+			}()
 			_, err = io.Copy(f, ef.Reader)
 			if err != nil {
 				return fmt.Errorf("file saving error %w", err)

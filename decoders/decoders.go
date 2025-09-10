@@ -29,7 +29,7 @@ func DecodeHeader(s string) (string, error) {
 	charsetReader := func(label string, input io.Reader) (io.Reader, error) {
 		enc, _ := charset.Lookup(label)
 		if enc == nil {
-			normalizedLabel := strings.Replace(label, "windows-", "cp", -1)
+			normalizedLabel := strings.ReplaceAll(label, "windows-", "cp")
 			enc, _ = charset.Lookup(normalizedLabel)
 		}
 		if enc == nil {
