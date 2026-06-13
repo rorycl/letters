@@ -6,6 +6,7 @@ import (
 	"net/mail"
 	"os"
 	"path/filepath"
+	"slices"
 	"time"
 
 	"github.com/rorycl/letters/email"
@@ -37,12 +38,7 @@ func WithSkipContentTypes(skipContentTypes []string) Opt {
 
 // inSkipContentTypes determines if a content-type should be skipped
 func (p *Parser) inSkipContentTypes(ct string) bool {
-	for _, s := range p.skipContentTypes {
-		if s == ct {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(p.skipContentTypes, ct)
 }
 
 // WithoutAttachments skips parsing email attachments, which often

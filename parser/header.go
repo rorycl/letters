@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/mail"
+	"slices"
 	"strings"
 	"time"
 
@@ -48,12 +49,7 @@ var explicitHeaders = []string{
 // This slice search is much the same speed as a map lookup for small
 // slices.
 func isExplicitHeader(s string) bool {
-	for _, e := range explicitHeaders {
-		if e == s {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(explicitHeaders, s)
 }
 
 // idTrimCutset is the set of characters to trim around a message ID
@@ -111,7 +107,7 @@ func (se *stagedEmail) parseHeaders() error {
 	// getIDs returns a slice of cleaned message ids
 	getIDs := func(s string) []string {
 		ids := []string{}
-		for _, id := range strings.Split(s, " ") {
+		for id := range strings.SplitSeq(s, " ") {
 			id := strings.TrimSpace(strings.Trim(id, idTrimCutset))
 			if id == "" {
 				continue
@@ -137,8 +133,8 @@ func (se *stagedEmail) parseHeaders() error {
 	// getCSV gets parts of a comma delimited string
 	getCSV := func(s string) []string {
 		o := []string{}
-		parts := strings.Split(s, ",")
-		for _, pa := range parts {
+		parts := strings.SplitSeq(s, ",")
+		for pa := range parts {
 			pp := strings.TrimSpace(pa)
 			if len(pp) > 0 {
 				o = append(o, pp)

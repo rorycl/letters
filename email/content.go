@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"mime"
 	"net/textproto"
+	"slices"
 	"strings"
 
 	"golang.org/x/net/html/charset"
@@ -147,12 +148,7 @@ type ContentInfo struct {
 var contentDispositions = []string{"attachment", "inline"}
 
 func inSlice(s []string, q string) bool {
-	for _, o := range s {
-		if o == q {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(s, q)
 }
 
 // contentTransfers is a slice of valid transfer encoding
