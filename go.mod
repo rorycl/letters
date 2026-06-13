@@ -1,11 +1,11 @@
 module github.com/rorycl/letters
 
-go 1.25.0
+go 1.26
 
 require (
 	github.com/rorycl/base64toraw v0.0.1
-	golang.org/x/net v0.55.0
-	golang.org/x/text v0.37.0
+	golang.org/x/net v0.56.0
+	golang.org/x/text v0.38.0
 )
 
 require github.com/google/go-cmp v0.7.0
